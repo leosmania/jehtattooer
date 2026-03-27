@@ -1,13 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { client } from '../sanity/client';
+import { urlForImage } from '../sanity/lib/image';
 import styles from './Header.module.css';
 
-export default function Header() {
+export default async function Header() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let settings: any = null;
+  try {
+    settings = await client.fetch(`*[_type == "siteSettings"][0]{ logo }`);
+  } catch {
+    // silently fail
+  }
+
+  const logoSrc = settings?.logo ? urlForImage(settings.logo).width(120).height(120).url() : '/logo.png';
+
   return (
     <header className={styles.header}>
       <div className={`container ${styles.headerContent}`}>
         <Link href="/" className={styles.logoLink}>
-          <Image src="/logo.png" alt="JehTattooer Logo" width={60} height={60} className={styles.logo} />
+          <Image src={logoSrc} alt="JehTattooer Logo" width={60} height={60} className={styles.logo} />
         </Link>
         <nav className={styles.nav}>
           <Link href="#sobre">Sobre</Link>

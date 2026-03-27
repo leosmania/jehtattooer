@@ -6,6 +6,16 @@ import { urlForImage } from '../sanity/lib/image';
 import styles from './Footer.module.css';
 
 export default async function Footer() {
+  // Fetch site settings for logo
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let settings: any = null;
+  try {
+    settings = await client.fetch(`*[_type == "siteSettings"][0]{ logo }`);
+  } catch {
+    // silently fail
+  }
+  const logoSrc = settings?.logo ? urlForImage(settings.logo).width(160).height(160).url() : '/logo.png';
+
   // Try to fetch the 4 most recent portfolio items from Sanity for the Instagram-style grid
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let recentWorks: { _id: string; title: string; image?: any }[] = [];
@@ -34,7 +44,7 @@ export default async function Footer() {
     <footer className={styles.footer}>
       <div className={`container ${styles.grid}`}>
         <div className={styles.brand}>
-          <Image src="/logo.png" alt="JehTattooer Logo" width={80} height={80} className={styles.logo} />
+          <Image src={logoSrc} alt="JehTattooer Logo" width={80} height={80} className={styles.logo} />
           <h3 className={styles.brandName}>Jéssica Barboza</h3>
           <p className={styles.brandDesc}>
             Arte na pele. Tatuagens florais e fineline delicadas desenvolvidas com exclusividade em Florianópolis.
