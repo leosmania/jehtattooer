@@ -1,4 +1,6 @@
-import { type SchemaTypeDefinition } from 'sanity'
-import portfolio from './portfolio'
+import { type SchemaTypeDefinition } from 'sanity';
+import { portfolioType } from './portfolioType';
 
-export const schemaTypes: SchemaTypeDefinition[] = [portfolio]
+export const schema: { types: SchemaTypeDefinition[] } = {
+  types: [portfolioType],
+};

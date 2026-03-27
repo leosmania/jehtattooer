@@ -1,108 +1,46 @@
 .services {
-  padding: 100px 0;
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
-.subtitle {
-  color: var(--accent-light);
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.title {
-  font-size: 2.5rem;
-  color: var(--text-primary);
+  background-color: #061510; /* Slightly darker than bg-primary */
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
 }
 
 .card {
-  background-color: rgba(8, 28, 21, 0.5);
-  border: 1px solid var(--border-subtle);
-  padding: 40px 30px;
+  background: var(--bg-primary);
+  padding: 3rem 2rem;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   text-align: center;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  background-color: rgba(92, 114, 110, 0.1);
-}
-
-.card:hover::before {
-  transform: scaleX(1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
 .iconWrapper {
-  width: 70px;
-  height: 70px;
-  margin: 0 auto 25px;
-  background-color: rgba(92, 114, 110, 0.15);
-  border-radius: 50%;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(92, 114, 110, 0.1);
   color: var(--accent);
-  transition: all 0.3s ease;
-}
-
-.card:hover .iconWrapper {
-  background-color: var(--accent);
-  color: var(--bg-primary);
+  margin-bottom: 2rem;
 }
 
 .cardTitle {
-  font-family: var(--font-playfair), serif;
-  font-size: 1.4rem;
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--text-primary);
 }
 
-.cardDescription {
+.cardDesc {
   color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  font-size: 1rem;
 }

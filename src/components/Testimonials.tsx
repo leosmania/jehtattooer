@@ -1,50 +1,39 @@
-import { Star } from 'lucide-react';
+import { Quote } from 'lucide-react';
 import styles from './Testimonials.module.css';
 
 export default function Testimonials() {
-  const reviews = [
+  const feedback = [
     {
-      id: 1,
-      name: 'Amanda Oliveira',
-      text: 'O trabalho da Jéssica é impecável! Ela fez um ramo de flores no meu braço, o traço é o mais fino e delicado que já vi. O ambiente do estúdio em Floripa é super aconchegante e me senti muito confortável o tempo todo.',
-      role: 'Primeira Tatuagem'
+      name: 'Mariana S.',
+      text: 'A Jéssica foi incrível! O traço dela é o mais fino e delicado que já vi. Fiz uma homenagem pra minha mãe e ficou melhor do que eu sonhava.',
+      service: 'Tatuagem Floral Autoral'
     },
     {
-      id: 2,
-      name: 'Carolina Mendes',
-      text: 'Queria fazer uma homenagem para minha mãe e a arte que ela criou superou todas as expectativas. O processo de criação foi muito cuidadoso, ela escutou tudo que eu queria e eternizou com uma perfeição incrível.',
-      role: 'Tatuagem Delicada'
+      name: 'Camila T.',
+      text: 'Ambiente super acolhedor e profissional. Eu tinha muito medo de dor, mas a mão dela é super leve. O fineline ficou perfeito, nem precisou de retoque.',
+      service: 'Micro-tatuagem Fineline'
     },
     {
-      id: 3,
-      name: 'Fernanda Costa',
-      text: 'Já fiz três tatuagens fineline com a Jeh e o resultado é sempre maravilhoso. A cicatrização é ótima, o traço continua fininho e elegante. Recomendo de olhos fechados pra quem busca arte sofisticada.',
-      role: 'Fineline'
+      name: 'Letícia B.',
+      text: 'Deixei a criação por conta dela e foi a melhor escolha. A Jéssica conseguiu traduzir exatamente o que eu queria numa arte única e exclusiva.',
+      service: 'Tatuagem Delicada Personalizada'
     }
   ];
 
   return (
-    <section className={styles.testimonials} id="depoimentos">
+    <section id="depoimentos" className={styles.testimonials}>
       <div className="container">
-        <div className={styles.header}>
-          <span className={styles.subtitle}>Experiências Reais</span>
-          <h2 className={styles.title}>O que minhas clientes dizem</h2>
-        </div>
-
+        <span className="section-subtitle">O Que Dizem</span>
+        <h2 className="section-title">Experiências</h2>
+        
         <div className={styles.grid}>
-          {reviews.map((review) => (
-            <div key={review.id} className={styles.card}>
-              <div className={styles.stars}>
-                <Star className={styles.star} size={18} fill="currentColor" />
-                <Star className={styles.star} size={18} fill="currentColor" />
-                <Star className={styles.star} size={18} fill="currentColor" />
-                <Star className={styles.star} size={18} fill="currentColor" />
-                <Star className={styles.star} size={18} fill="currentColor" />
-              </div>
-              <p className={styles.text}>"{review.text}"</p>
-              <div className={styles.author}>
-                <h4 className={styles.name}>{review.name}</h4>
-                <span className={styles.role}>{review.role}</span>
+          {feedback.map((item, index) => (
+            <div key={index} className={styles.card}>
+              <Quote size={40} className={styles.quoteIcon} />
+              <p className={styles.text}>&quot;{item.text}&quot;</p>
+              <div className={styles.authorGroup}>
+                <span className={styles.name}>{item.name}</span>
+                <span className={styles.service}>{item.service}</span>
               </div>
             </div>
           ))}

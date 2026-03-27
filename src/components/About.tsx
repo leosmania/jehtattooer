@@ -3,39 +3,29 @@ import styles from './About.module.css';
 
 export default function About() {
   return (
-    <section className={styles.about} id="sobre">
-      <div className={`container ${styles.aboutGrid}`}>
-        <div className={styles.imageWrapper}>
-          <Image 
-            src="https://images.unsplash.com/photo-1574340321743-f66141cd1973?q=80&w=1000&auto=format&fit=crop" 
-            alt="Jéssica Barboza - JehTattooer trabalhando no estúdio" 
-            width={500}
-            height={600}
-            className={styles.image}
-            style={{ objectFit: 'cover' }}
-          />
-          <div className={styles.accentCircle}></div>
+    <section id="sobre" className={styles.about}>
+      <div className={`container ${styles.grid}`}>
+        <div className={styles.imageColumn}>
+          <div className={styles.imageWrapper}>
+            <Image 
+              src="https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=800&auto=format&fit=crop" 
+              alt="Jéssica Barboza trabalhando" 
+              fill 
+              className={styles.image}
+            />
+            <div className={styles.accentBox}></div>
+          </div>
         </div>
-        
-        <div className={styles.textContent}>
-          <span className={styles.subtitle}>Sobre a Artista</span>
-          <h2 className={styles.title}>Jéssica Barboza</h2>
-          
-          <div className={styles.prose}>
-            <p>
-              Olá! Sou a Jéssica, a artista por trás da JehTattooer. Há anos venho desenvolvendo minha paixão profunda pelos traços finos e pela arte delicada. Para mim, a tatuagem é mais do que tinta na pele — é a tradução visual da sua história, das suas paixões e da sua essência.
-            </p>
-            <p>
-              Minha trajetória começou com a fascinação pelas formas naturais, o que me levou a especializar-me em tatuagens florais e botânicas autorais. Cada desenho que crio é único, pensado exclusivamente para se harmonizar com a anatomia e a personalidade de quem o veste.
-            </p>
-            <p>
-              No meu estúdio, localizado no calçadão João Pinto em Florianópolis, proporciono um ambiente seguro, acolhedor e tranquilo. Meu objetivo é que sua experiência seja tão bonita e marcante quanto o resultado final da arte que levaremos para a sua pele.
-            </p>
-          </div>
-          
-          <div className={styles.signature}>
-            <span>Tatuadora Especialista em Fineline & Botânica</span>
-          </div>
+        <div className={styles.textColumn}>
+          <span className="section-subtitle">Sobre Mim</span>
+          <h2 className={styles.title}>Prazer, Jéssica Barboza</h2>
+          <p className={styles.bio}>
+            Sou apaixonada por traços finos e detalhes sutis. Minha missão como tatuadora é transformar suas ideias e memórias em uma arte corporal eterna, elegante e delicada.
+          </p>
+          <p className={styles.bio}>
+            Com especialização em fineline e florais autorais, ofereço um atendimento personalizado em meu estúdio no Centro de Florianópolis, garantindo que cada cliente se sinta confortável e tenha uma experiência única.
+          </p>
+          <a href="#contato" className="btn-outline" style={{ marginTop: '2rem' }}>Vamos Conversar</a>
         </div>
       </div>
     </section>

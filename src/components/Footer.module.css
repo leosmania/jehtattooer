@@ -1,108 +1,128 @@
 .footer {
-  background-color: var(--bg-secondary);
-  padding: 60px 0 0;
-  border-top: 1px solid var(--border-subtle);
+  background-color: #040e0a;
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--border-color);
 }
 
-.footerGrid {
+.grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
-  gap: 40px;
-  margin-bottom: 40px;
+  gap: 4rem;
+  margin-bottom: 4rem;
 }
 
-.brandSection {
+.brand {
   max-width: 400px;
 }
 
-.logoWrapper {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
 .logo {
-  border-radius: 50%;
-  object-fit: cover;
+  margin-bottom: 1rem;
 }
 
-.brandTitle {
-  font-family: var(--font-playfair), serif;
-  font-size: 1.2rem;
-  line-height: 1.3;
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
 }
 
-.brandTitle span {
-  font-size: 0.9rem;
-  font-family: var(--font-inter), sans-serif;
-  color: var(--text-secondary);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.brandDescription {
+.brandDesc {
   color: var(--text-secondary);
   font-size: 0.95rem;
   line-height: 1.6;
 }
 
-.sectionTitle {
-  font-family: var(--font-playfair), serif;
-  font-size: 1.3rem;
-  margin-bottom: 20px;
-  color: var(--accent-light);
+.links h4,
+.instagram h4 {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
 }
 
-.contactList, .linksList {
+.links ul {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1rem;
 }
 
-.contactList li {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.4;
-}
-
-.icon {
-  color: var(--accent);
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.linksList a {
+.links a {
   color: var(--text-secondary);
   font-size: 0.95rem;
   transition: color 0.3s ease;
 }
 
-.linksList a:hover {
-  color: var(--accent-light);
+.links a:hover {
+  color: var(--accent);
 }
 
-.copyright {
+.igHandle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.igHandle:hover {
+  color: var(--accent);
+}
+
+.igGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.igItem {
+  position: relative;
+  aspect-ratio: 1/1;
+  border-radius: 4px;
+  overflow: hidden;
+  display: block;
+}
+
+.igImage {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.igOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(8, 28, 21, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.igItem:hover .igImage {
+  transform: scale(1.1);
+}
+
+.igItem:hover .igOverlay {
+  opacity: 1;
+}
+
+.copy {
   text-align: center;
-  padding: 20px;
-  background-color: rgba(0,0,0,0.2);
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   color: var(--text-secondary);
   font-size: 0.85rem;
-  letter-spacing: 0.5px;
 }
 
 @media (max-width: 900px) {
-  .footerGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 600px) {
-  .footerGrid {
+  .grid {
     grid-template-columns: 1fr;
+    gap: 3rem;
   }
 }
