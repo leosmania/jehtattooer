@@ -1,0 +1,108 @@
+.footer {
+  background-color: var(--bg-secondary);
+  padding: 60px 0 0;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.brandSection {
+  max-width: 400px;
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.logo {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.brandTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.brandTitle span {
+  font-size: 0.9rem;
+  font-family: var(--font-inter), sans-serif;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.brandDescription {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.sectionTitle {
+  font-family: var(--font-playfair), serif;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  color: var(--accent-light);
+}
+
+.contactList, .linksList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contactList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.icon {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.linksList a {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.linksList a:hover {
+  color: var(--accent-light);
+}
+
+.copyright {
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0,0,0,0.2);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 900px) {
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
+  }
+}
