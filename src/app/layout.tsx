@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
-import { Raleway, Cormorant_Garamond } from 'next/font/google';
+import { Nunito_Sans, Lora } from 'next/font/google';
 import './globals.css';
 
-const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], variable: '--font-cormorant', weight: ['300', '400', '500', '600', '700'] });
+const nunito = Nunito_Sans({ subsets: ['latin'], variable: '--font-nunito' });
+const lora = Lora({ subsets: ['latin'], variable: '--font-lora', weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
   title: 'JehTattooer | Tatuagens Florais e Fineline Delicadas em Florianópolis',
@@ -51,7 +51,7 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR">
-      <body className={`${raleway.variable} ${cormorant.variable}`}>
+      <body className={`${nunito.variable} ${lora.variable}`}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -6,8 +6,8 @@
   --accent-hover: #4A5E5A;
   --border-color: rgba(92, 114, 110, 0.3);
   
-  --font-heading: var(--font-cormorant), 'Cormorant Garamond', serif;
-  --font-body: var(--font-raleway), 'Raleway', sans-serif;
+  --font-heading: var(--font-lora), 'Lora', serif;
+  --font-body: var(--font-nunito), 'Nunito Sans', sans-serif;
   
   --container-width: 1200px;
   --spacing-sm: 0.5rem;
