@@ -2,11 +2,9 @@
   background-color: #061510;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 4rem;
-  align-items: center;
+.content {
+  text-align: center;
+  max-width: 800px;
 }
 
 .title {
@@ -18,92 +16,81 @@
 
 .text {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   margin-bottom: 3rem;
   line-height: 1.8;
 }
 
-.contactList {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+.infoCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
-.contactList li {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+.card {
+  background: var(--bg-primary);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.card h4 {
   color: var(--text-primary);
-  font-size: 1.05rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.card p,
+.card a {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.card a:hover {
+  color: var(--accent);
 }
 
 .iconWrap {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background: rgba(92, 114, 110, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--accent);
+  margin: 0 auto 1rem;
 }
 
-.contactList a:hover {
-  color: var(--accent);
+.whatsappBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: #25D366;
+  color: #ffffff;
+  padding: 1.25rem 3rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
 }
 
-.formWrapper {
-  background: var(--bg-primary);
-  padding: 3rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
+.whatsappBtn:hover {
+  background-color: #1ebe5d;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
 }
 
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.inputGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inputGroup label {
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-}
-
-.inputGroup input,
-.inputGroup textarea {
-  width: 100%;
-  padding: 1rem;
-  background: #061510;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-
-.inputGroup input:focus,
-.inputGroup textarea:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.submitBtn {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-@media (max-width: 900px) {
-  .grid {
+@media (max-width: 768px) {
+  .title {
+    font-size: 2rem;
+  }
+  .infoCards {
     grid-template-columns: 1fr;
   }
 }

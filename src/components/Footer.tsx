@@ -1,15 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { default as CustomInstagramIcon } from './icons/Instagram';
+import { client } from '../sanity/client';
+import { urlForImage } from '../sanity/lib/image';
 import styles from './Footer.module.css';
 
-export default function Footer() {
-  const images = [
+export default async function Footer() {
+  // Try to fetch the 4 most recent portfolio items from Sanity for the Instagram-style grid
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let recentWorks: { _id: string; title: string; image?: any }[] = [];
+  try {
+    recentWorks = await client.fetch(`*[_type == "portfolio"] | order(_createdAt desc)[0...4]{ _id, title, image }`);
+  } catch {
+    // silently fail
+  }
+
+  const fallbackImages = [
     'https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?q=80&w=200&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1542385151-efd9000785a0?q=80&w=200&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1623548906560-449e6f3dfdb6?q=80&w=200&auto=format&fit=crop',
     'https://images.unsplash.com/photo-1582255740417-6d2c4bdeec52?q=80&w=200&auto=format&fit=crop'
   ];
+
+  // Build the image list: use Sanity images if available, else fallback
+  const igImages = recentWorks.length > 0
+    ? recentWorks.map(w => ({
+        src: w.image ? urlForImage(w.image).width(200).height(200).url() : fallbackImages[0],
+        alt: w.title || 'Instagram post'
+      }))
+    : fallbackImages.map(src => ({ src, alt: 'Instagram post' }));
 
   return (
     <footer className={styles.footer}>
@@ -38,9 +57,9 @@ export default function Footer() {
             <CustomInstagramIcon size={18} /> @jehtattooer
           </a>
           <div className={styles.igGrid}>
-            {images.map((src, i) => (
+            {igImages.map((img, i) => (
               <a key={i} href="https://instagram.com/jehtattooer" target="_blank" rel="noopener noreferrer" className={styles.igItem}>
-                <Image src={src} alt="Instagram post" fill className={styles.igImage} sizes="100px" />
+                <Image src={img.src} alt={img.alt} fill className={styles.igImage} sizes="100px" />
                 <div className={styles.igOverlay}><CustomInstagramIcon size={20} /></div>
               </a>
             ))}
