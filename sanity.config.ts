@@ -1,4 +1,5 @@
 import { defineConfig } from 'sanity';
+import { structureTool } from 'sanity/structure';
 import { schema } from './src/sanity/schemaTypes';
 
 export default defineConfig({
@@ -7,4 +8,5 @@ export default defineConfig({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   title: 'JehTattooer Studio',
   schema,
+  plugins: [structureTool()],
 });
