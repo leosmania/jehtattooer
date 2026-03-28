@@ -70,11 +70,117 @@
 }
 
 @media (max-width: 768px) {
-  .title { font-size: 2rem; }
+  .main {
+    padding: 1.5rem 1rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .textCenter {
+    margin-bottom: 1.5rem;
+  }
+
   .roletaGrid {
     display: flex;
     flex-direction: column-reverse; /* Form at the bottom, Wheel on top for mobile */
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .formSection {
+    padding: 1.5rem;
+  }
+
+  .wheelContainer {
+    max-width: 320px !important;
+  }
+
+  .sliceText {
+    font-size: 0.6rem;
+    transform: translateX(15px) translateY(-50%) rotate(-22.5deg);
+  }
+
+  .pointer {
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-right: 30px solid var(--accent);
+  }
+
+  .wheelCenterBtn {
+    width: 50px;
+    height: 50px;
+    font-size: 1rem;
+    border: 3px solid var(--accent);
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .textCenter {
+    margin-bottom: 1rem;
+  }
+
+  .roletaGrid {
+    gap: 1rem;
+  }
+
+  .formSection {
+    padding: 1.25rem;
+  }
+
+  .captureForm h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .wheelContainer {
+    max-width: 280px !important;
+  }
+
+  .sliceText {
+    font-size: 0.55rem;
+    transform: translateX(12px) translateY(-50%) rotate(-22.5deg);
+  }
+
+  .pointer {
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-right: 25px solid var(--accent);
+    right: -8px;
+  }
+
+  .wheelCenterBtn {
+    width: 45px;
+    height: 45px;
+    font-size: 0.9rem;
+    border: 2px solid var(--accent);
+  }
+
+  .btnSpin {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .successBox h3 {
+    font-size: 1.5rem;
+  }
+
+  .prizeHighlight {
+    font-size: 1rem;
+    padding: 0.75rem;
   }
 }
 
