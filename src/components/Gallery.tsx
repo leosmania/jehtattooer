@@ -7,7 +7,7 @@ import styles from './Gallery.module.css';
 export const revalidate = 60;
 
 export default async function Gallery() {
-  const query = `*[_type == "portfolio"] | order(_createdAt desc)[0...20]`;
+  const query = `*[_type == "portfolio"] | order(_createdAt desc)`;
   let rawWorks: { _id: string; title: string; category: string; image?: any; demoUrl?: string }[] = [];
 
   try {

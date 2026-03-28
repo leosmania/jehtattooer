@@ -40,10 +40,86 @@
   filter: brightness(1.1);
 }
 
+.carouselWrapper {
+  position: relative;
+  padding: 0 3.5rem;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: rgba(6, 21, 16, 0.85);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+.arrow:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(6, 21, 16, 0.95);
+}
+
+.arrow:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.arrowLeft {
+  left: -0.5rem;
+}
+
+.arrowRight {
+  right: -0.5rem;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .carouselWrapper {
+    padding: 0 2.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carouselWrapper {
+    padding: 0;
+  }
+
+  .arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .arrowLeft {
+    left: -0.25rem;
+  }
+
+  .arrowRight {
+    right: -0.25rem;
+  }
 }
 
 .item {
@@ -104,4 +180,31 @@
 .item:hover .overlay h3,
 .item:hover .overlay span {
   transform: translateY(0);
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  padding: 0;
+}
+
+.dot:hover {
+  border-color: var(--accent);
+}
+
+.dotActive {
+  background: var(--accent);
+  border-color: var(--accent);
 }
