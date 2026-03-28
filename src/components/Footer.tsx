@@ -35,9 +35,9 @@ export default async function Footer() {
   // Build the image list: use Sanity images if available, else fallback
   const igImages = recentWorks.length > 0
     ? recentWorks.map(w => ({
-        src: w.image ? urlForImage(w.image).width(200).height(200).url() : fallbackImages[0],
-        alt: w.title || 'Instagram post'
-      }))
+      src: w.image ? urlForImage(w.image).width(200).height(200).url() : fallbackImages[0],
+      alt: w.title || 'Instagram post'
+    }))
     : fallbackImages.map(src => ({ src, alt: 'Instagram post' }));
 
   return (
@@ -57,6 +57,7 @@ export default async function Footer() {
             <li><Link href="#sobre">A Artista</Link></li>
             <li><Link href="#servicos">Estilos</Link></li>
             <li><Link href="#portfolio">Portfólio</Link></li>
+            <li><Link href="#artes-disponiveis">Artes Disponíveis</Link></li>
             <li><Link href="#processo">Como Funciona</Link></li>
           </ul>
         </div>
@@ -76,7 +77,7 @@ export default async function Footer() {
           </div>
         </div>
       </div>
-      
+
       <div className={styles.copy}>
         <p>&copy; {new Date().getFullYear()} Jéssica Barboza - JehTattooer. Todos os direitos reservados.</p>
       </div>
