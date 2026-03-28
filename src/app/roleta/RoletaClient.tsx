@@ -168,6 +168,9 @@ export default function RoletaClient() {
                 <div className={styles.prizeWarning}>
                   <p>Os brindes da roleta são exclusivos para clientes que agendarem e realizarem uma tatuagem com a profissional.</p>
                 </div>
+                <div className={styles.voucherAlert}>
+                  <p><strong>⚠️ ATENÇÃO:</strong> Você <strong>PRECISA informar que ganhou este voucher</strong> no momento do agendamento com a profissional. Caso não informe antes do procedimento ser realizado, <strong>não poderá utilizar o voucher</strong>.</p>
+                </div>
               </div>
             )}
             <div className={styles.formGroup}>
