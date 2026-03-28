@@ -3,7 +3,8 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Services from '@/components/Services';
 import Gallery from '@/components/Gallery';
-import RouletteSection from '@/components/RouletteSection';
+import Roulette from '@/components/Roulette';
+import Promotions from '@/components/Promotions';
 import AvailableArt from '@/components/AvailableArt';
 import Testimonials from '@/components/Testimonials';
 import Process from '@/components/Process';
@@ -20,7 +21,8 @@ export default function Home() {
         <About />
         <Services />
         <Gallery />
-        <RouletteSection />
+        <Roulette />
+        <Promotions />
         <AvailableArt />
         <Testimonials />
         <Process />
