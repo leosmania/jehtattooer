@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
       }
-    ]
+    ],
+    minimumCacheTTL: 2592000,
   }
 };
 

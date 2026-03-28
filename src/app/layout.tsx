@@ -8,15 +8,25 @@ const lora = Lora({ subsets: ['latin'], variable: '--font-lora', weight: ['400',
 export const metadata: Metadata = {
   title: 'JehTattooer | Tatuagens Florais e Fineline Delicadas em Florianópolis',
   description: 'Especialista em tatuagens delicadas, fineline e florais no Centro de Florianópolis, SC. Agende seu horário com Jéssica Barboza.',
-  keywords: ['Tatuagem floral Florianópolis', 'Fineline tattoo Florianópolis', 'Tatuadora delicada Florianópolis', 'JehTattooer Florianópolis', 'Tatuagem feminina Florianópolis'],
+  keywords: ['Tatuagem floral Florianópolis', 'Fineline tattoo Florianópolis', 'Tatuadora delicada Florianópolis', 'JehTattooer Florianópolis', 'Tatuagem feminina Florianópolis', 'tatuagem delicada SC', 'tatuagem centro Florianópolis', 'Jéssica Barboza tatuadora'],
+  metadataBase: new URL('https://jehtattooer.com.br'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: 'JehTattooer | Arte Delicada na Pele',
     description: 'Tatuagens exclusivas e delicadas no Calçadão João Pinto, Florianópolis.',
-    url: 'https://jehtattooer.com',
+    url: 'https://jehtattooer.com.br',
     siteName: 'JehTattooer',
-    images: [{ url: '/logo.png', width: 800, height: 600, alt: 'JehTattooer Logo' }],
+    images: [{ url: '/logo.png', width: 800, height: 600, alt: 'JehTattooer - Tatuagens Florais e Fineline em Florianópolis' }],
     locale: 'pt_BR',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'JehTattooer | Arte Delicada na Pele',
+    description: 'Tatuagens exclusivas e delicadas no Calçadão João Pinto, Florianópolis.',
+    images: ['/logo.png'],
   },
 };
 
@@ -29,9 +39,9 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'TattooParlor', 'Person'],
     name: 'JehTattooer - Jéssica Barboza',
-    image: 'https://jehtattooer.com/logo.png',
-    '@id': 'https://jehtattooer.com',
-    url: 'https://jehtattooer.com',
+    image: 'https://jehtattooer.com.br/logo.png',
+    '@id': 'https://jehtattooer.com.br',
+    url: 'https://jehtattooer.com.br',
     telephone: '+5548998158191',
     address: {
       '@type': 'PostalAddress',
