@@ -24,6 +24,12 @@ export const leadType = defineType({
       readOnly: true,
     }),
     defineField({
+      name: 'birthDate',
+      title: 'Data de Nascimento',
+      type: 'date',
+      readOnly: true,
+    }),
+    defineField({
       name: 'prize',
       title: 'Prêmio Ganho',
       type: 'string',
