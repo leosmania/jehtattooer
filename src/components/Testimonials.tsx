@@ -52,15 +52,19 @@ export default async function Testimonials() {
             const imgSrc = hasImage ? urlForImage(item.image).url() : null;
 
             return (
-              <div key={item._id} className={styles.card}>
-                <Quote size={40} className={styles.quoteIcon} />
-                <p className={styles.text}>&quot;{item.text}&quot;</p>
+              <div key={item._id} className={`${styles.card} ${(!item.text && hasImage) ? styles.imageOnly : ''}`}>
+                {item.text && (
+                  <>
+                    <Quote size={40} className={styles.quoteIcon} />
+                    <p className={styles.text}>&quot;{item.text}&quot;</p>
+                  </>
+                )}
 
                 {imgSrc && (
                   <div className={styles.testimonialImage}>
                     <Image
                       src={imgSrc}
-                      alt={`Depoimento de ${item.name}`}
+                      alt={item.name ? `Depoimento de ${item.name}` : 'Depoimento em imagem'}
                       width={500}
                       height={400}
                       className={styles.testimonialImg}
@@ -69,10 +73,12 @@ export default async function Testimonials() {
                   </div>
                 )}
 
-                <div className={styles.authorGroup}>
-                  <span className={styles.name}>{item.name}</span>
-                  <span className={styles.service}>{item.service}</span>
-                </div>
+                {(item.name || item.service) && (
+                  <div className={styles.authorGroup}>
+                    {item.name && <span className={styles.name}>{item.name}</span>}
+                    {item.service && <span className={styles.service}>{item.service}</span>}
+                  </div>
+                )}
               </div>
             );
           })}

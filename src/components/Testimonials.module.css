@@ -16,6 +16,17 @@
   border: 1px solid var(--border-color);
 }
 
+.imageOnly {
+  padding: 0;
+  overflow: hidden;
+}
+
+.imageOnly .testimonialImage {
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
+}
+
 .quoteIcon {
   color: var(--accent);
   opacity: 0.2;

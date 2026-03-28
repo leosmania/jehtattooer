@@ -9,21 +9,20 @@ export const testimonialType = defineType({
       name: 'name',
       title: 'Nome do Cliente',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'text',
-      title: 'Depoimento',
+      title: 'Depoimento (texto)',
       type: 'text',
       rows: 4,
-      validation: (Rule) => Rule.required(),
+      description: 'Opcional se uma imagem for adicionada.',
     }),
     defineField({
       name: 'image',
-      title: 'Imagem (opcional)',
+      title: 'Imagem do Depoimento',
       type: 'image',
       options: { hotspot: true },
-      description: 'Adicione uma imagem ao depoimento (print de conversa, foto do resultado, etc.)',
+      description: 'Print de conversa, foto do resultado, etc. Pode ser usado sozinho ou junto com o texto.',
     }),
     defineField({
       name: 'service',
@@ -44,6 +43,15 @@ export const testimonialType = defineType({
     select: {
       title: 'name',
       subtitle: 'service',
+      media: 'image',
+    },
+    prepare(selection) {
+      const { title, subtitle, media } = selection;
+      return {
+        title: title || 'Depoimento em imagem',
+        subtitle: subtitle || '',
+        media,
+      };
     },
   },
 });
