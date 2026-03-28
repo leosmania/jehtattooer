@@ -2,6 +2,44 @@
     background-color: var(--bg-primary);
 }
 
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.filterBtn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    letter-spacing: 0.5px;
+}
+
+.filterBtn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.filterActive {
+    background: var(--accent);
+    color: var(--bg-primary);
+    border-color: var(--accent);
+    font-weight: 600;
+}
+
+.filterActive:hover {
+    color: var(--bg-primary);
+    filter: brightness(1.1);
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
