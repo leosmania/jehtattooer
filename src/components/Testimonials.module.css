@@ -52,3 +52,17 @@
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
+.testimonialImage {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.testimonialImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}

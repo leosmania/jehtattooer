@@ -1,14 +1,17 @@
+import Image from 'next/image';
 import { Quote } from 'lucide-react';
 import { client } from '../sanity/client';
+import { urlForImage } from '../sanity/lib/image';
 import styles from './Testimonials.module.css';
 
 export const revalidate = 60;
 
 export default async function Testimonials() {
-  let feedback: { _id: string; name: string; text: string; service: string }[] = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let feedback: { _id: string; name: string; text: string; service: string; image?: any }[] = [];
 
   try {
-    feedback = await client.fetch(`*[_type == "testimonial"] | order(_createdAt desc)[0...6]{ _id, name, text, service }`);
+    feedback = await client.fetch(`*[_type == "testimonial"] | order(_createdAt desc)[0...6]{ _id, name, text, service, image }`);
   } catch {
     // silently fail
   }
@@ -42,18 +45,37 @@ export default async function Testimonials() {
       <div className="container">
         <span className="section-subtitle">O Que Dizem</span>
         <h2 className="section-title">Experiências</h2>
-        
+
         <div className={styles.grid}>
-          {feedback.map((item) => (
-            <div key={item._id} className={styles.card}>
-              <Quote size={40} className={styles.quoteIcon} />
-              <p className={styles.text}>&quot;{item.text}&quot;</p>
-              <div className={styles.authorGroup}>
-                <span className={styles.name}>{item.name}</span>
-                <span className={styles.service}>{item.service}</span>
+          {feedback.map((item) => {
+            const hasImage = item.image != null;
+            const imgSrc = hasImage ? urlForImage(item.image).url() : null;
+
+            return (
+              <div key={item._id} className={styles.card}>
+                <Quote size={40} className={styles.quoteIcon} />
+                <p className={styles.text}>&quot;{item.text}&quot;</p>
+
+                {imgSrc && (
+                  <div className={styles.testimonialImage}>
+                    <Image
+                      src={imgSrc}
+                      alt={`Depoimento de ${item.name}`}
+                      width={500}
+                      height={400}
+                      className={styles.testimonialImg}
+                      sizes="(max-width: 768px) 100vw, 400px"
+                    />
+                  </div>
+                )}
+
+                <div className={styles.authorGroup}>
+                  <span className={styles.name}>{item.name}</span>
+                  <span className={styles.service}>{item.service}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

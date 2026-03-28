@@ -19,6 +19,13 @@ export const testimonialType = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'image',
+      title: 'Imagem (opcional)',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Adicione uma imagem ao depoimento (print de conversa, foto do resultado, etc.)',
+    }),
+    defineField({
       name: 'service',
       title: 'Serviço Realizado',
       type: 'string',

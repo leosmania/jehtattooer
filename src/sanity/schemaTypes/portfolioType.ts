@@ -18,7 +18,12 @@ export const portfolioType = defineType({
         list: [
           { title: 'Floral', value: 'Floral' },
           { title: 'Fineline', value: 'Fineline' },
-          { title: 'Delicada', value: 'Delicada' },
+          { title: 'Botanica', value: 'Botanica' },
+          { title: 'Animais', value: 'Animais' },
+          { title: 'Ornamental', value: 'Ornamental' },
+          { title: 'Cicatrizadas', value: 'Cicatrizadas' },
+          { title: 'Pontilhismo', value: 'Pontilhismo' },
+          { title: 'Homenagens', value: 'Homenagens' },
         ],
       },
     }),
