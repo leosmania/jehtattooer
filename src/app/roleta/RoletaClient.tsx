@@ -7,14 +7,14 @@ import { submitLead } from '../actions/saveLead';
 import styles from './Roleta.module.css';
 
 const PRIZES = [
-  "10% de Desconto",
+  "EcoBag Personalizada",
+  "10% DESC. Acima de R$300",
+  "20% DESC. Acima de R$500",
   "Pomada Cicatrizante Grátis",
-  "5% de Desconto",
-  "Arte Exclusiva sem Custo",
-  "10% de Desconto",
+  "Mini Tattoo Grátis",
   "Pomada Cicatrizante Grátis",
-  "5% de Desconto",
-  "Arte Exclusiva sem Custo",
+  "EcoBag Personalizada",
+  "Mini Tattoo Grátis",
 ];
 
 export default function RoletaClient() {
