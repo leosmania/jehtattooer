@@ -1,0 +1,330 @@
+.page {
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: var(--text-primary);
+}
+
+.header {
+  padding: 1.5rem 0;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(8, 28, 21, 0.95);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logoLink {
+  display: block;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.textCenter {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ROLETALAYOUT */
+.roletaGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .roletaGrid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .title { font-size: 2rem; }
+  .roletaGrid {
+    display: flex;
+    flex-direction: column-reverse; /* Form at the bottom, Wheel on top for mobile */
+    gap: 2rem;
+  }
+}
+
+/* FORM STYLES */
+.formSection {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.captureForm h3 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(217, 249, 157, 0.1);
+}
+
+.formGroup input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnSpin {
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.btnSpin:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(217, 249, 157, 0.3);
+}
+
+.btnSpin:disabled {
+  background: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* SUCCESS BOX */
+.successBox {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.successIcon {
+  margin-bottom: 1rem;
+  animation: popIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.successBox h3 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.successBox p {
+  color: var(--text-secondary);
+}
+
+.prizeHighlight {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+  padding: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.successDesc {
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.btnSuccess {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1rem;
+  background: #25D366; /* WhatsApp Green */
+  color: white;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btnSuccess:hover {
+  background: #1ebc5a;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* WHEEL STYLES */
+.wheelSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wheelContainer {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 12px rgba(255, 255, 255, 0.1), 0 10px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.pointer {
+  position: absolute;
+  top: 50%;
+  right: -10px; /* Pointing to the right side edge (0 degrees) */
+  transform: translateY(-50%);
+  width: 0; 
+  height: 0; 
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-right: 40px solid var(--accent);
+  z-index: 10;
+  filter: drop-shadow(-2px 2px 2px rgba(0,0,0,0.4));
+}
+
+.wheel {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  /* Basic conic gradient for the background slices */
+  background: conic-gradient(
+    #0d2f21 0deg 45deg,
+    #134430 45deg 90deg,
+    #0d2f21 90deg 135deg,
+    #134430 135deg 180deg,
+    #0d2f21 180deg 225deg,
+    #134430 225deg 270deg,
+    #0d2f21 270deg 315deg,
+    #134430 315deg 360deg
+  );
+}
+
+.sliceGroup {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  /* Each item is rotated from the center */
+}
+
+.sliceText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 20px;
+  transform-origin: 0 50%;
+  transform: translateY(-50%) rotate(22.5deg); /* Half of slice angle to center text */
+  padding-right: 15%;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  color: #e5e5e5;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+@media (max-width: 400px) {
+  .sliceText {
+    font-size: 0.7rem;
+    padding-right: 12%;
+  }
+}
+
+.wheelCenterBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: #081c15;
+  border: 4px solid var(--accent);
+  border-radius: 50%;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.2rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  font-family: var(--font-heading);
+}
