@@ -6,18 +6,32 @@ import styles from './Testimonials.module.css';
 
 export const revalidate = 60;
 
-export default async function Testimonials() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+interface Testimonial {
+  _id: string;
+  name?: string;
+  text?: string;
+  service?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let feedback: { _id: string; name: string; text: string; service: string; image?: any }[] = [];
+  image?: any;
+}
+
+export default async function Testimonials() {
+  let feedback: Testimonial[] = [];
 
   try {
-    feedback = await client.fetch(`*[_type == "testimonial"] | order(_createdAt desc)[0...6]{ _id, name, text, service, image }`);
-  } catch {
-    // silently fail
+    const result = await client.fetch<Testimonial[]>(
+      `*[_type == "testimonial"] | order(_createdAt desc)[0...6]{ _id, name, text, service, image }`
+    );
+    if (result && result.length > 0) {
+      feedback = result;
+    }
+  } catch (error) {
+    console.error("Sanity testimonial fetch failed:", error);
   }
 
   // Fallback demo data
-  if (!feedback || feedback.length === 0) {
+  if (feedback.length === 0) {
     feedback = [
       {
         _id: '1',
@@ -48,22 +62,32 @@ export default async function Testimonials() {
 
         <div className={styles.grid}>
           {feedback.map((item) => {
-            const hasImage = item.image != null;
-            const imgSrc = hasImage ? urlForImage(item.image).url() : null;
+            let imgSrc: string | null = null;
+            try {
+              if (item.image) {
+                imgSrc = urlForImage(item.image).url();
+              }
+            } catch {
+              console.error(`Failed to resolve image for testimonial ${item._id}`);
+            }
+
+            const hasText = !!item.text;
+            const hasImage = !!imgSrc;
+            const isImageOnly = !hasText && hasImage;
 
             return (
-              <div key={item._id} className={`${styles.card} ${(!item.text && hasImage) ? styles.imageOnly : ''}`}>
-                {item.text && (
+              <div key={item._id} className={`${styles.card} ${isImageOnly ? styles.imageOnly : ''}`}>
+                {hasText && (
                   <>
                     <Quote size={40} className={styles.quoteIcon} />
                     <p className={styles.text}>&quot;{item.text}&quot;</p>
                   </>
                 )}
 
-                {imgSrc && (
+                {hasImage && (
                   <div className={styles.testimonialImage}>
                     <Image
-                      src={imgSrc}
+                      src={imgSrc!}
                       alt={item.name ? `Depoimento de ${item.name}` : 'Depoimento em imagem'}
                       width={500}
                       height={400}
