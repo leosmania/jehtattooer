@@ -71,6 +71,7 @@
 .testimonialImg {
   width: 100%;
   height: auto;
+  max-height: 300px;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
