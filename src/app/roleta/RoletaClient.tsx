@@ -6,20 +6,18 @@ import { MessageCircle, CheckCircle } from 'lucide-react';
 import { submitLead } from '../actions/saveLead';
 import styles from './Roleta.module.css';
 
-const PRIZE_DATA = [
-  { name: "EcoBag Personalizada", requiresTattoo: false },
-  { name: "10% DESC. Acima de R$500", requiresTattoo: false },
-  { name: "Pomada Cicatrizante Grátis", requiresTattoo: true },
-  { name: "Mini Tattoo Grátis 3cm", requiresTattoo: true },
-  { name: "Pomada Cicatrizante Grátis", requiresTattoo: true },
-  { name: "EcoBag Personalizada", requiresTattoo: false },
-  { name: "Mini Tattoo Grátis 3cm", requiresTattoo: true },
-  { name: "Kit Pós Tattoo Completo", requiresTattoo: true },
-  { name: "Kit Pós Tattoo Completo", requiresTattoo: true },
-  { name: "Mini Tattoo Grátis 3cm", requiresTattoo: true },
+const PRIZES = [
+  "EcoBag Personalizada",
+  "10% DESC. Acima de R$500",
+  "Pomada Cicatrizante Grátis",
+  "Mini Tattoo Grátis 3cm",
+  "Pomada Cicatrizante Grátis",
+  "EcoBag Personalizada",
+  "Mini Tattoo Grátis 3cm",
+  "Kit Pós Tattoo Completo",
+  "Kit Pós Tattoo Completo",
+  "Mini Tattoo Grátis 3cm",
 ];
-
-const PRIZES = PRIZE_DATA.map(p => p.name);
 
 export default function RoletaClient() {
   const [hasPlayed, setHasPlayed] = useState(false);
@@ -163,18 +161,12 @@ export default function RoletaClient() {
               <div className={styles.prizesList}>
                 <p className={styles.prizesTitle}>🎁 Prêmios Possíveis:</p>
                 <ul>
-                  {PRIZE_DATA.map((prize, idx) => (
-                    <li key={idx} className={prize.requiresTattoo ? styles.requiresTattoo : ''}>
-                      <span className={styles.prizeName}>{prize.name}</span>
-                      {prize.requiresTattoo && (
-                        <span className={styles.requiresTag}>⚠️ Requer tatuagem</span>
-                      )}
-                    </li>
+                  {PRIZES.map((prize, idx) => (
+                    <li key={idx}>{prize}</li>
                   ))}
                 </ul>
-                <div className={styles.importantNotice}>
-                  <p className={styles.noticeTitle}>⚡ Informação Importante:</p>
-                  <p>Você <strong>DEVE informar que ganhou este voucher</strong> no momento do agendamento. Caso não informe antes do procedimento ser realizado, <strong>não poderá utilizar o voucher</strong>.</p>
+                <div className={styles.prizeWarning}>
+                  <p>Os brindes da roleta são exclusivos para clientes que agendarem e realizarem uma tatuagem com a profissional.</p>
                 </div>
               </div>
             )}
