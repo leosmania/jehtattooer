@@ -285,25 +285,23 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 40%;
+  width: 50%;
   height: auto;
-  transform-origin: left center;
-  transform: translateX(15px) translateY(-50%);
-  padding: 0;
+  transform-origin: 0% 50%;
+  transform: translateX(20px) translateY(-50%) rotate(-22.5deg);
+  padding: 0 10px;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-transform: uppercase;
   z-index: 3;
   white-space: normal;
   word-wrap: break-word;
-  line-height: 1.1;
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
+  line-height: 1.2;
 }
 
 @media (max-width: 400px) {

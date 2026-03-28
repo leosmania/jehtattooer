@@ -13,6 +13,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  other: {
+    'google-site-verification': 'dM0jBcxE-74OFIkogJPULV3e7KG_eKHeMpooSvO6Nwg',
+  },
   openGraph: {
     title: 'JehTattooer | Arte Delicada na Pele',
     description: 'Tatuagens exclusivas e delicadas no Calçadão João Pinto, Florianópolis.',
