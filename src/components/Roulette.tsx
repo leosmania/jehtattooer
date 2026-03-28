@@ -68,9 +68,8 @@ export default function Roulette() {
     const selectedPrize = PRIZES[prizeIndex];
 
     const sliceAngle = 360 / PRIZES.length;
-    const prizeCenter = prizeIndex * sliceAngle + sliceAngle / 2;
-    const randomOffset = Math.floor(Math.random() * 10) + 1;
-    const targetRotation = (360 * 5) + (360 - prizeCenter) - randomOffset;
+    const randomOffset = Math.floor(Math.random() * 8) + 1;
+    const targetRotation = (360 * 5) - (prizeIndex * sliceAngle) - (sliceAngle / 2) + randomOffset;
 
     const newRotation = rotation + targetRotation;
     setRotation(newRotation);

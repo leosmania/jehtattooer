@@ -51,6 +51,10 @@ export default async function Promotions() {
         <h2 className={styles.title}>Promoções e Ofertas Especiais</h2>
         <p className={styles.subtitle}>Confira nossas promoções exclusivas</p>
 
+        <div className={styles.alertBox}>
+          <p><strong>⚠️ ATENÇÃO:</strong> Para garantir sua promoção, é <strong>necessário informar a profissional no momento do agendamento</strong> que tem interesse na promoção. Envie um print da promoção escolhida. Caso contrário, a promoção não poderá ser utilizada.</p>
+        </div>
+
         <div className={styles.grid}>
           {promotions.map((promo: Promotion) => {
             const imageUrl = promo.image
