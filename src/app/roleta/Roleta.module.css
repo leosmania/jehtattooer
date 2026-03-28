@@ -285,20 +285,25 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 50%;
-  height: 20px;
-  transform-origin: 0 50%;
-  transform: translateY(-50%) rotate(22.5deg); /* Half of slice angle to center text */
-  padding-right: 15%;
-  text-align: right;
+  width: 45%;
+  height: auto;
+  transform-origin: 0 0;
+  transform: translateX(10px) translateY(-50%);
+  padding-right: 0;
+  text-align: center;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  color: #e5e5e5;
-  font-size: 0.85rem;
-  font-weight: 600;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
   text-transform: uppercase;
   z-index: 3;
+  white-space: normal;
+  word-wrap: break-word;
+  line-height: 1.2;
+  writing-mode: vertical-rl;
+  transform: translateX(15px) translateY(-50%) scaleX(-1);
 }
 
 @media (max-width: 400px) {
