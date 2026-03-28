@@ -25,6 +25,7 @@ export default async function Header() {
           <Link href="#sobre">Sobre</Link>
           <Link href="#servicos">Serviços</Link>
           <Link href="#portfolio">Portfólio</Link>
+          <Link href="#roleta" className={styles.btnRoleta}>🎁 Roleta</Link>
           <Link href="#artes-disponiveis">Artes Disponíveis</Link>
           <Link href="#depoimentos">Depoimentos</Link>
           <Link href="#contato" className="btn-primary" style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}>Agendar</Link>

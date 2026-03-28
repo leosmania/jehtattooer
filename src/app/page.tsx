@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import About from '@/components/About';
 import Services from '@/components/Services';
 import Gallery from '@/components/Gallery';
+import RouletteSection from '@/components/RouletteSection';
 import AvailableArt from '@/components/AvailableArt';
 import Testimonials from '@/components/Testimonials';
 import Process from '@/components/Process';
@@ -19,6 +20,7 @@ export default function Home() {
         <About />
         <Services />
         <Gallery />
+        <RouletteSection />
         <AvailableArt />
         <Testimonials />
         <Process />

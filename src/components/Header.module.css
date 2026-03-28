@@ -32,6 +32,23 @@
   color: var(--accent);
 }
 
+.btnRoleta {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, var(--accent) 0%, #4ade80 100%);
+  color: var(--bg-primary) !important;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(217, 249, 157, 0.3);
+}
+
+.btnRoleta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(217, 249, 157, 0.4);
+  filter: brightness(1.1);
+}
+
 @media (max-width: 768px) {
   .nav {
     display: none; /* simple mobile hide for now */

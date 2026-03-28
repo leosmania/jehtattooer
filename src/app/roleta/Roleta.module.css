@@ -117,7 +117,8 @@
 
 @media (max-width: 480px) {
   .main {
-    padding: 1rem;
+    padding: 1rem 0.5rem;
+    min-height: auto;
   }
 
   .title {
@@ -135,10 +136,20 @@
 
   .roletaGrid {
     gap: 1rem;
+    width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .wheelSection {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 0;
   }
 
   .formSection {
     padding: 1.25rem;
+    width: 100%;
   }
 
   .captureForm h3 {
@@ -148,6 +159,8 @@
 
   .wheelContainer {
     max-width: 280px !important;
+    width: 280px !important;
+    height: 280px !important;
   }
 
   .sliceText {

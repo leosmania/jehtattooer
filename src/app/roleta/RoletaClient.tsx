@@ -71,12 +71,11 @@ export default function RoletaClient() {
     const selectedPrize = PRIZES[prizeIndex];
 
     // Math for wheel rotation
-    const sliceAngle = 360 / PRIZES.length;
-    // We want the WINNING prize to land on TOP (270 degrees usually, but here we'll align the CSS pointer to the top)
-    // Actually, let's say the pointer points to the RIGHT (0 degrees). 
-    // To land on prizeIndex, we rotate backwards the slice offset + multiple spins.
-    const randomOffset = Math.floor(Math.random() * (sliceAngle - 2)) + 1; // minor random inside the slice
-    const targetRotation = (360 * 5) - (prizeIndex * sliceAngle) - randomOffset; 
+    const sliceAngle = 360 / PRIZES.length; // 36 degrees per slice with 10 prizes
+    // Pointer is at 0 degrees (right side), calculate rotation to land prize center at pointer
+    const prizeCenter = prizeIndex * sliceAngle + sliceAngle / 2;
+    const randomOffset = Math.floor(Math.random() * 10) + 1; // small random variation
+    const targetRotation = (360 * 5) + (360 - prizeCenter) - randomOffset; 
     
     // Accumulate rotation so it keeps spinning further continuously if played again (not possible here due to hasPlayed, but good practice)
     const newRotation = rotation + targetRotation;
