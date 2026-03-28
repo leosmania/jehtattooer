@@ -1,7 +1,6 @@
-import Image from 'next/image';
-import { Quote } from 'lucide-react';
 import { client } from '../sanity/client';
 import { urlForImage } from '../sanity/lib/image';
+import TestimonialsClient from './TestimonialsClient';
 import styles from './Testimonials.module.css';
 
 export const revalidate = 60;
@@ -54,59 +53,37 @@ export default async function Testimonials() {
     ];
   }
 
+  // Pre-process image URLs on the server
+  const items = feedback.map((item) => {
+    let imgSrc: string | null = null;
+    try {
+      if (item.image) {
+        imgSrc = urlForImage(item.image).url();
+      }
+    } catch {
+      console.error(`Failed to resolve image for testimonial ${item._id}`);
+    }
+
+    const hasText = !!item.text;
+    const hasImage = !!imgSrc;
+
+    return {
+      _id: item._id,
+      name: item.name,
+      text: item.text,
+      service: item.service,
+      imgSrc,
+      isImageOnly: !hasText && hasImage,
+    };
+  });
+
   return (
     <section id="depoimentos" className={styles.testimonials}>
       <div className="container">
         <span className="section-subtitle">O Que Dizem</span>
         <h2 className="section-title">Experiências</h2>
 
-        <div className={styles.grid}>
-          {feedback.map((item) => {
-            let imgSrc: string | null = null;
-            try {
-              if (item.image) {
-                imgSrc = urlForImage(item.image).url();
-              }
-            } catch {
-              console.error(`Failed to resolve image for testimonial ${item._id}`);
-            }
-
-            const hasText = !!item.text;
-            const hasImage = !!imgSrc;
-            const isImageOnly = !hasText && hasImage;
-
-            return (
-              <div key={item._id} className={`${styles.card} ${isImageOnly ? styles.imageOnly : ''}`}>
-                {hasText && (
-                  <>
-                    <Quote size={40} className={styles.quoteIcon} />
-                    <p className={styles.text}>&quot;{item.text}&quot;</p>
-                  </>
-                )}
-
-                {hasImage && (
-                  <div className={styles.testimonialImage}>
-                    <Image
-                      src={imgSrc!}
-                      alt={item.name ? `Depoimento de ${item.name}` : 'Depoimento em imagem'}
-                      width={500}
-                      height={400}
-                      className={styles.testimonialImg}
-                      sizes="(max-width: 768px) 100vw, 400px"
-                    />
-                  </div>
-                )}
-
-                {(item.name || item.service) && (
-                  <div className={styles.authorGroup}>
-                    {item.name && <span className={styles.name}>{item.name}</span>}
-                    {item.service && <span className={styles.service}>{item.service}</span>}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        <TestimonialsClient items={items} />
       </div>
     </section>
   );

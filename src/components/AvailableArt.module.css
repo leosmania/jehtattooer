@@ -181,3 +181,80 @@
     font-size: 1.1rem;
     margin-bottom: 1.5rem;
 }
+
+/* Carousel Styles for Mobile */
+.carouselWrapper {
+    position: relative;
+    padding: 0;
+}
+
+@media (max-width: 576px) {
+    .carouselWrapper {
+        padding: 0 2rem;
+    }
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: rgba(6, 21, 16, 0.85);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
+.arrow:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(6, 21, 16, 0.95);
+}
+
+.arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.arrowLeft {
+    left: -0.5rem;
+}
+
+.arrowRight {
+    right: -0.5rem;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    padding: 0;
+}
+
+.dot:hover {
+    border-color: var(--accent);
+}
+
+.dotActive {
+    background: var(--accent);
+    border-color: var(--accent);
+}
