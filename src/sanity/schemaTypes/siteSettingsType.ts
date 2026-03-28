@@ -13,6 +13,13 @@ export const siteSettingsType = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'heroImage',
+      title: 'Imagem de Fundo (Tela Inicial)',
+      type: 'image',
+      description: 'A imagem de fundo que aparece na tela inicial do site.',
+      options: { hotspot: true },
+    }),
+    defineField({
       name: 'aboutPhoto',
       title: 'Foto do Sobre Mim',
       type: 'image',

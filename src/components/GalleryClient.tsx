@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Lightbox from './Lightbox';
@@ -13,12 +13,31 @@ interface Work {
     imageUrl: string;
 }
 
-const ITEMS_PER_PAGE = 6;
+function useItemsPerPage() {
+    const [itemsPerPage, setItemsPerPage] = useState(6);
+
+    useEffect(() => {
+        function calculate() {
+            const w = window.innerWidth;
+            if (w <= 576) return 1;
+            if (w <= 992) return 4;
+            return 6;
+        }
+        setItemsPerPage(calculate());
+
+        const handleResize = () => setItemsPerPage(calculate());
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return itemsPerPage;
+}
 
 export default function GalleryClient({ works }: { works: Work[] }) {
     const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
     const [activeFilter, setActiveFilter] = useState<string>('Todos');
     const [page, setPage] = useState(0);
+    const itemsPerPage = useItemsPerPage();
 
     // Extract unique categories from actual data
     const categories = useMemo(() => {
@@ -31,21 +50,29 @@ export default function GalleryClient({ works }: { works: Work[] }) {
         return works.filter((w) => w.category === activeFilter);
     }, [works, activeFilter]);
 
-    const totalPages = Math.ceil(filteredWorks.length / ITEMS_PER_PAGE);
-    const currentWorks = filteredWorks.slice(page * ITEMS_PER_PAGE, (page + 1) * ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(filteredWorks.length / itemsPerPage);
+
+    // Clamp page when itemsPerPage or filter changes
+    const safePage = Math.min(page, Math.max(totalPages - 1, 0));
+    const currentWorks = filteredWorks.slice(safePage * itemsPerPage, (safePage + 1) * itemsPerPage);
 
     const handleFilterChange = (cat: string) => {
         setActiveFilter(cat);
-        setPage(0); // Reset to first page on filter change
+        setPage(0);
     };
 
     const goNext = () => {
-        if (page < totalPages - 1) setPage(page + 1);
+        if (safePage < totalPages - 1) setPage(safePage + 1);
     };
 
     const goPrev = () => {
-        if (page > 0) setPage(page - 1);
+        if (safePage > 0) setPage(safePage - 1);
     };
+
+    // Sync page if it went out of bounds
+    useEffect(() => {
+        if (page !== safePage) setPage(safePage);
+    }, [page, safePage]);
 
     return (
         <>
@@ -66,7 +93,7 @@ export default function GalleryClient({ works }: { works: Work[] }) {
                     <button
                         className={`${styles.arrow} ${styles.arrowLeft}`}
                         onClick={goPrev}
-                        disabled={page === 0}
+                        disabled={safePage === 0}
                         aria-label="Anterior"
                     >
                         <ChevronLeft size={28} />
@@ -99,7 +126,7 @@ export default function GalleryClient({ works }: { works: Work[] }) {
                     <button
                         className={`${styles.arrow} ${styles.arrowRight}`}
                         onClick={goNext}
-                        disabled={page === totalPages - 1}
+                        disabled={safePage === totalPages - 1}
                         aria-label="Próximo"
                     >
                         <ChevronRight size={28} />
@@ -112,7 +139,7 @@ export default function GalleryClient({ works }: { works: Work[] }) {
                     {Array.from({ length: totalPages }, (_, i) => (
                         <button
                             key={i}
-                            className={`${styles.dot} ${page === i ? styles.dotActive : ''}`}
+                            className={`${styles.dot} ${safePage === i ? styles.dotActive : ''}`}
                             onClick={() => setPage(i)}
                             aria-label={`Página ${i + 1}`}
                         />
