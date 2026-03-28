@@ -4,7 +4,8 @@ import { testimonialType } from './testimonialType';
 import { siteSettingsType } from './siteSettingsType';
 import { availableArtType } from './availableArtType';
 import { leadType } from './leadType';
+import { promotionType } from './promotionType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [portfolioType, testimonialType, siteSettingsType, availableArtType, leadType],
+  types: [portfolioType, testimonialType, siteSettingsType, availableArtType, leadType, promotionType],
 };
