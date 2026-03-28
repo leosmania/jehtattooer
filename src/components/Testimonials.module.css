@@ -17,14 +17,11 @@
 }
 
 .imageOnly {
-  padding: 0;
-  overflow: hidden;
+  padding: 1.5rem;
 }
 
 .imageOnly .testimonialImage {
   margin-bottom: 0;
-  border: none;
-  border-radius: 0;
 }
 
 .quoteIcon {
