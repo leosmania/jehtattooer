@@ -19,12 +19,13 @@ const PRIZES = [
 
 export default function RoletaClient() {
   const [hasPlayed, setHasPlayed] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', whatsapp: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', whatsapp: '', birthDate: '' });
   const [formValid, setFormValid] = useState(false);
   
   const [isSpinning, setIsSpinning] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [prizeWon, setPrizeWon] = useState<string | null>(null);
+  const [showPrizes, setShowPrizes] = useState(false);
 
   useEffect(() => {
     // Check local storage so they don't abuse it (simple client-side check)
@@ -50,10 +51,11 @@ export default function RoletaClient() {
     setFormData(newData);
     
     // Validate
-    const isValid = 
+    const isValid =
       newData.name.trim().length > 2 &&
       newData.email.includes('@') &&
-      newData.whatsapp.length >= 14;
+      newData.whatsapp.length >= 14 &&
+      newData.birthDate.length > 0;
     setFormValid(isValid);
   };
 
@@ -109,7 +111,7 @@ export default function RoletaClient() {
       }());
 
       // Save lead in backend
-      await submitLead(formData.name, formData.email, formData.whatsapp, selectedPrize);
+      await submitLead(formData.name, formData.email, formData.whatsapp, selectedPrize, formData.birthDate);
       
     }, 5000);
   };
@@ -146,6 +148,23 @@ export default function RoletaClient() {
         ) : (
           <div className={styles.captureForm}>
             <h3>Preencha para Girar</h3>
+            <button
+              type="button"
+              className={styles.btnShowPrizes}
+              onClick={() => setShowPrizes(!showPrizes)}
+            >
+              {showPrizes ? '✕ Ocultar Prêmios' : '🎁 Ver Prêmios Possíveis'}
+            </button>
+            {showPrizes && (
+              <div className={styles.prizesList}>
+                <p className={styles.prizesTitle}>Prêmios possíveis:</p>
+                <ul>
+                  {PRIZES.map((prize, idx) => (
+                    <li key={idx}>{prize}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className={styles.formGroup}>
               <label>Seu Nome *</label>
               <input 
@@ -170,11 +189,21 @@ export default function RoletaClient() {
             </div>
             <div className={styles.formGroup}>
               <label>Seu WhatsApp *</label>
-              <input 
-                type="tel" 
+              <input
+                type="tel"
                 name="whatsapp"
-                placeholder="(00) 00000-0000" 
-                value={formData.whatsapp} 
+                placeholder="(00) 00000-0000"
+                value={formData.whatsapp}
+                onChange={handleChange}
+                disabled={isSpinning}
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label>Data de Nascimento *</label>
+              <input
+                type="date"
+                name="birthDate"
+                value={formData.birthDate}
                 onChange={handleChange}
                 disabled={isSpinning}
               />

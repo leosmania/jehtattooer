@@ -2,10 +2,10 @@
 
 import { client } from '@/sanity/client';
 
-export async function submitLead(name: string, email: string, whatsapp: string, prize: string) {
+export async function submitLead(name: string, email: string, whatsapp: string, prize: string, birthDate: string) {
   try {
     const token = process.env.SANITY_API_WRITE_TOKEN || process.env.SANITY_API_TOKEN;
-    
+
     if (token) {
       const writeClient = client.withConfig({ token, useCdn: false });
       await writeClient.create({
@@ -13,13 +13,14 @@ export async function submitLead(name: string, email: string, whatsapp: string, 
         name,
         email,
         whatsapp,
+        birthDate,
         prize,
         date: new Date().toISOString(),
       });
       return { success: true };
     } else {
       console.log('Lead Capturado na Roleta (⚠️ Sem token de Sanity para salvar diretamente):');
-      console.log(`Nome: ${name} | Email: ${email} | WhatsApp: ${whatsapp} | Prêmio: ${prize}`);
+      console.log(`Nome: ${name} | Email: ${email} | WhatsApp: ${whatsapp} | Data Nascimento: ${birthDate} | Prêmio: ${prize}`);
       return { success: true, message: 'Salvo em log local' };
     }
   } catch (error) {

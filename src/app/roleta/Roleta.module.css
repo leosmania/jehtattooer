@@ -90,9 +90,69 @@
 .captureForm h3 {
   font-family: var(--font-heading);
   font-size: 1.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
   color: var(--text-primary);
+}
+
+.btnShowPrizes {
+  width: 100%;
+  padding: 0.75rem;
+  background: rgba(217, 249, 157, 0.1);
+  border: 1px solid rgba(217, 249, 157, 0.3);
+  color: var(--accent);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.btnShowPrizes:hover {
+  background: rgba(217, 249, 157, 0.15);
+  border-color: var(--accent);
+}
+
+.prizesList {
+  background: rgba(217, 249, 157, 0.05);
+  border: 1px solid rgba(217, 249, 157, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.prizesTitle {
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0 0 0.75rem 0;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.prizesList ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.prizesList li {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.prizesList li:before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: bold;
 }
 
 .formGroup {
