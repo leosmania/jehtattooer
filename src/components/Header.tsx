@@ -25,6 +25,7 @@ export default async function Header() {
           <Link href="#sobre">Sobre</Link>
           <Link href="#servicos">Serviços</Link>
           <Link href="#portfolio">Portfólio</Link>
+          <Link href="/blog">Blog</Link>
           <Link href="#promocoes" className={styles.btnRoleta}>🎁 Promoções</Link>
           <Link href="#artes-disponiveis">Artes Disponíveis</Link>
           <Link href="#depoimentos">Depoimentos</Link>

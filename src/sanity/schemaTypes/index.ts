@@ -5,7 +5,8 @@ import { siteSettingsType } from './siteSettingsType';
 import { availableArtType } from './availableArtType';
 import { leadType } from './leadType';
 import { promotionType } from './promotionType';
+import { blogType } from './blogType';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [portfolioType, testimonialType, siteSettingsType, availableArtType, leadType, promotionType],
+  types: [portfolioType, testimonialType, siteSettingsType, availableArtType, leadType, promotionType, blogType],
 };
