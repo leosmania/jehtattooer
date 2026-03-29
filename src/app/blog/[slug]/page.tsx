@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { client } from '@/sanity/client';
 import { urlForImage } from '@/sanity/lib/image';
-import { PortableText } from 'next-sanity';
+import { PortableText, type PortableTextReactComponents } from 'next-sanity';
 import styles from './Post.module.css';
 
 export const revalidate = 60;
@@ -107,14 +107,14 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const portableTextComponents = {
+const portableTextComponents: PortableTextReactComponents = {
   types: {
-    image: ({ value }: { value: any }) => {
+    image: ({ value }: any) => {
       return (
         <div className={styles.imageInContent}>
           <Image
             src={urlForImage(value).url()}
-            alt={value.alt || 'Imagem do post'}
+            alt={value?.alt || 'Imagem do post'}
             width={800}
             height={600}
             className={styles.contentImage}
@@ -124,8 +124,8 @@ const portableTextComponents = {
     },
   },
   marks: {
-    link: ({ children, value }: { children: React.ReactNode; value: any }) => (
-      <a href={value.href} target="_blank" rel="noopener noreferrer" className={styles.link}>
+    link: ({ children, value }: any) => (
+      <a href={value?.href} target="_blank" rel="noopener noreferrer" className={styles.link}>
         {children}
       </a>
     ),
