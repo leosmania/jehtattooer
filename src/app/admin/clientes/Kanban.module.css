@@ -1,3 +1,9 @@
+.loading {
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
 .kanbanContainer {
   display: flex;
   flex-wrap: nowrap;

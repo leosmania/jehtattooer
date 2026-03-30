@@ -9,7 +9,7 @@ import {
   useSensors,
 } from '@dnd-kit/core'
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import KanbanColumn from './KanbanColumn'
 import { updateClientStatusAction } from '@/app/actions/crm/updateClientStatus'
 import styles from './Kanban.module.css'
@@ -37,7 +37,15 @@ interface KanbanBoardProps {
 }
 
 export default function KanbanBoard({ clients }: KanbanBoardProps) {
-  const [items, setItems] = useState<Client[]>(clients)
+  const [items, setItems] = useState<Client[]>([])
+  const [isReady, setIsReady] = useState(false)
+
+  // Inicializar items apenas no cliente
+  useEffect(() => {
+    setItems(clients)
+    setIsReady(true)
+  }, [clients])
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -74,6 +82,10 @@ export default function KanbanBoard({ clients }: KanbanBoardProps) {
       // Reverter estado se falhar
       setItems(clients)
     }
+  }
+
+  if (!isReady) {
+    return <div className={styles.loading}>Carregando kanban...</div>
   }
 
   return (
