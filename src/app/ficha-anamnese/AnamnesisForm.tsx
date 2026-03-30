@@ -1,6 +1,15 @@
 'use client'
 
 import { useState, useTransition } from 'react'
+
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length === 0) return value
+  if (digits.length <= 2) return `(${digits}`
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
 import { submitAnamnesisAction } from '@/app/actions/crm/submitAnamnesis'
 import styles from './AnamnesisForm.module.css'
 
@@ -24,44 +33,61 @@ const DOENCAS = [
 const CONDICOES_PELE = [
   'Vitiligo (provoca perda de coloração em determinadas regiões)',
   'Dermatite atópica',
+  'Dermatite de contato',
   'Eczema',
   'Escabiose (Sarna)',
-  'Melanoma',
+  'Melasma',
   'Psoríase',
 ]
 
-const HISTORICO_ALERGIAS = [
-  'Cicatrização',
-  'Doenças',
+const HISTORICO = [
+  'Convulsão',
+  'Desmaio',
   'Ataque alérgico',
 ]
 
-const TERMOS = `ORIENTAÇÕES PRÉ-PROCEDIMENTO
+const TERMOS = `TERMO DE RESPONSABILIDADE E ORIENTAÇÕES PRÉ-PROCEDIMENTO
 
-Antes de tatuar, é importante que você saiba que a tatuagem causa uma leve inflamação, portanto é necessário que você compare o tempo necessário para a cicatrização. Após cada sessão de tatuagem, há criação de uma nova arte onde o processo é semelhante ao seguinte: tenhamos como que a tatuagem não desaparece antes do tempo que você espera, isto é, de no mínimo 25h.
+Orientações para nosso atendimento ser ainda mais legal e agradável :)
 
-CUIDADOS PARA TATUAR
-– Prepare a sua pele pelo menos 1 semana antes (exfolie a parte do corpo para tatuar)
-– Durma bem antes (uma boa noite de sono faz toda a diferença para sua imunidade)
-– Alimente-se bem no dia da sessão — nunca vá em jejum
-– Evite o uso de cremes hidratantes na área que vai tatuar no dia anterior
-– Não é indicado usar acompanhantes para a sessão, e isso é necessário para que o espaço e o ambiente seja adequado para você
-– Evite tomar bebidas alcoólicas 48h antes
-– Evite tomar aspirina ou outros anticoagulantes antes, pois pode retardar a cicatrização em sua avaliação
+Pense bem antes de reservar o horário — não agende para uma data que você tenha outros compromissos, pois a tattoo é uma arte, e arte requer tempo e tranquilidade. Afinal, a intenção é que ela fique pra sempre com você, e você separar o tempo necessário para um bom resultado é o começo dessa parceria.
 
-SOBRE A CICATRIZAÇÃO
-Cada metabolismo reage de forma diferente. Por isso, algumas pessoas cicatrizam muito bem e com muito pouco desconforto, e outras podem precisar de mais sessões.
+Não troque a arte no momento do procedimento. Cada horário é reservado com um tempo estimado de execução; a criação de uma nova arte pode prejudicar o próximo horário, ou fazer com que o horário agendado seja desperdiçado em caso de trocas por artes mais simples. Comunique qualquer mudança de arte com no mínimo 24h de antecedência.
 
-TATUAGEM É PROCESSO E REQUER PACIÊNCIA. Não espere chegar aos resultados antes do tempo. Caso não tenha problema, os toques precisam ser realizados.
+──────────────────────────────────────
+PREPARE SUA PELE PARA TATUAR
 
-SOBRE RESULTADOS
-TATUAGEM É UM PROCESSO E REQUER PACIÊNCIA. NÃO ESPERE CHEGAR A RESULTADOS ANTES DO TEMPO. TATUAGENS REALIZADAS COM MUITO TEMPO PASSADO NA MESMA POSIÇÃO podem resultar em reações adversas que serão tratadas no menor tempo possível.
+• Tome bastante água (para hidratar a pele de dentro para fora)
+• Faça uma esfoliação na área que irá tatuar (para afinar a camada externa da pele)
+• Assim que decidir tatuar, inicie um intensivo de hidratação — hidrate generosamente ao menos 3 vezes ao dia
+• Escolha sua roupa pensando na área que irá tatuar
+• Venha bem alimentada — se sua tattoo for grande, faremos uma pausa e você pode trazer uma marmitinha se preferir
+• Não é indicado trazer acompanhantes, pois a espera é cansativa e pode acabar trazendo preocupação no seu momento especial
+• Não é permitida a presença de crianças — este momento é seu, e o ambiente sem estímulos e com muita espera pode ser muito desconfortável para elas
+• Evite atrasos excessivos ou chegar muito antes do horário. Se precisar atrasar um pouquinho não tem problema — estarei preparada para isso — mas avise. Se precisar se adiantar, avise também
+• Não beba nem use nenhuma substância psicoativa antes da sua tattoo; pode causar reações adversas para as quais não tenho preparo para lidar
+• TATUAGEM É UM PROCESSO DEMORADO. PRESSA É INIMIGA DE BONS RESULTADOS. VENHA PREPARADA TANTO FISICAMENTE QUANTO MENTALMENTE PARA A POSSIBILIDADE DE PASSAR MUITO TEMPO PARADA NA MESMA POSIÇÃO
 
-SOBRE O PAGAMENTO
-Para finalizar um agendamento, é cobrado um sinal de 50%, que será pago por via Pix/transferência bancária. Em caso de desistência, o sinal não é reembolsado. O agendamento é confirmado após 7 dias de antecedência. O pagamento do saldo restante é feito no dia da sessão.
+──────────────────────────────────────
+Tatuar é maravilhoso — é um momento em que você estará eternizando uma escolha em seu corpo. Se você me escolheu, confie e fique tranquila. Venha de coração aberto que iremos juntas fazer deste momento o mais agradável possível. Deixe toda e qualquer energia duvidosa para trás, e vamos viver essa experiência com leveza e alegria.
 
-ORÇAMENTO
-AO INICIAR UM PROJETO, LEVO EM CONSIDERAÇÃO: TAMANHO, NÍVEL DE DETALHES, ESTILO. O CLIENTE DEVE INFORMAR ANTES DO MOMENTO. CASO O CLIENTE SOLICITE TAMANHO MAIOR OU MENOR APÓS STENCIL, COMA OS OLHOS TAMBÉM COMO. O TIME TATTOO NUNCA O CUSTO ADICIONAL NÃO VALOR SERÁ OS MAIS.`
+Estou feliz em recebê-la aqui. Grata pela sua confiança. Até logo. 🌿
+
+──────────────────────────────────────
+SOBRE O PAGAMENTO DO SINAL
+
+Para finalizar seu agendamento, é cobrado um sinal de R$100,00, que pode ser pago por Pix, transferência ou depósito. Este valor será descontado do valor da sua tattoo.
+
+O agendamento é confirmado após o envio do comprovante de pagamento (pelo WhatsApp).
+
+O sinal não tem estorno em casos de desistência, cancelamento ou falta. Se necessário, você poderá reagendar com 48h de antecedência (1 vez dentro do prazo de 30 dias corridos). Após efetuar o pagamento do sinal, o cliente terá 30 dias corridos para realizar o agendamento.
+
+Em caso de projetos maiores (2 sessões ou mais), o prazo máximo entre uma sessão e outra é de 30 dias.
+
+──────────────────────────────────────
+IMPORTANTE — ORÇAMENTO
+
+AO ORÇAR SEU PROJETO, LEVO EM CONSIDERAÇÃO O TAMANHO, ÁREA E DETALHES SUGERIDOS PELO CLIENTE ANTES DO ORÇAMENTO. CASO O CLIENTE QUEIRA COMPLEMENTAR (ADICIONAR DETALHES, AUMENTAR TAMANHO, TROCAR A ARTE DE UMA ÁREA SIMPLES PARA UMA ÁREA SENSÍVEL COMO COSTELA, CLAVÍCULA, PESCOÇO, MÃOS, PÉS ETC.) ANTES OU NA HORA DA TATTOO, HAVERÁ UM CUSTO ADICIONAL AO VALOR DADO NO INÍCIO.`
 
 export default function AnamnesisForm({ token, clientNome, clientEmail, clientWhatsapp }: Props) {
   const [isPending, startTransition] = useTransition()
@@ -79,9 +105,9 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
   const [semCondicaoPele, setSemCondicaoPele] = useState(false)
   const [pressaoArterial, setPressaoArterial] = useState('')
 
-  // Alergias
-  const [historicoAlergias, setHistoricoAlergias] = useState<string[]>([])
-  const [semAlergia, setSemAlergia] = useState(false)
+  // Histórico
+  const [historico, setHistorico] = useState<string[]>([])
+  const [semHistorico, setSemHistorico] = useState(false)
   const [descricaoAlergias, setDescricaoAlergias] = useState('')
 
   // Estado atual
@@ -89,12 +115,14 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
   const [usoAlcoolDrogas, setUsoAlcoolDrogas] = useState<boolean | null>(null)
   const [emTratamento, setEmTratamento] = useState<boolean | null>(null)
   const [medicamentos, setMedicamentos] = useState('')
+  const [propensaoQueloide, setPropensaoQueloide] = useState<boolean | null>(null)
 
   // Extras
   const [experiencias, setExperiencias] = useState('')
   const [outrasInfo, setOutrasInfo] = useState('')
 
   // Termos
+  const [compromissoPagamento, setCompromissoPagamento] = useState('')
   const [aceitaTermos, setAceitaTermos] = useState(false)
   const [aceitaResponsabilidade, setAceitaResponsabilidade] = useState(false)
 
@@ -112,9 +140,9 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
     )
   }
 
-  function toggleHistoricoAlergia(tipo: string) {
-    setSemAlergia(false)
-    setHistoricoAlergias(prev =>
+  function toggleHistorico(tipo: string) {
+    setSemHistorico(false)
+    setHistorico(prev =>
       prev.includes(tipo) ? prev.filter(t => t !== tipo) : [...prev, tipo]
     )
   }
@@ -123,16 +151,18 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
     e.preventDefault()
     setError('')
 
-    if (gestante === null) { setError('Informe se está grávida ou lactante.'); return }
-    if (usoAlcoolDrogas === null) { setError('Informe sobre uso de álcool/drogas.'); return }
-    if (emTratamento === null) { setError('Informe se está em tratamento médico.'); return }
     if (!pressaoArterial) { setError('Informe sua pressão arterial.'); return }
+    if (gestante === null) { setError('Informe se está grávida ou lactante.'); return }
+    if (usoAlcoolDrogas === null) { setError('Informe sobre uso de substâncias psicoativas.'); return }
+    if (emTratamento === null) { setError('Informe se está em tratamento com medicamentos.'); return }
+    if (propensaoQueloide === null) { setError('Informe se tem propensão a quelóide.'); return }
+    if (!compromissoPagamento) { setError('Selecione uma opção sobre o pagamento do sinal.'); return }
     if (!aceitaTermos) { setError('Você precisa aceitar os termos de responsabilidade.'); return }
     if (!aceitaResponsabilidade) { setError('Você precisa confirmar a responsabilidade pela escolha da tatuagem.'); return }
 
     const condicoesSaude = semDoenca ? 'Nenhuma' : doencasSelecionadas.join(', ') || 'Nenhuma'
     const condicoesPele = semCondicaoPele ? 'Nenhuma' : condicoesPeleSelecionadas.join(', ') || 'Nenhuma'
-    const histAlergias = semAlergia ? 'Não' : historicoAlergias.join(', ') || 'Não'
+    const hist = semHistorico ? 'Não' : historico.join(', ') || 'Não'
 
     startTransition(async () => {
       const result = await submitAnamnesisAction(token, {
@@ -141,14 +171,16 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
         condicoes_saude: condicoesSaude,
         condicoes_pele: condicoesPele,
         pressao_arterial: pressaoArterial,
-        historico_alergias: histAlergias,
+        historico_alergias: hist,
         alergias: descricaoAlergias,
         gestante: gestante,
         uso_alcool_drogas: usoAlcoolDrogas,
         em_tratamento: emTratamento,
         medicamentos,
+        propensao_queloide: propensaoQueloide,
         experiencias_tatuagem: experiencias,
         outras_informacoes: outrasInfo,
+        compromisso_pagamento: compromissoPagamento,
         aceita_termos: aceitaTermos,
       })
 
@@ -201,7 +233,7 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
         </div>
         <div className={styles.readonlyGroup}>
           <span className={styles.readonlyLabel}>WhatsApp</span>
-          <span className={styles.readonlyValue}>{clientWhatsapp}</span>
+          <span className={styles.readonlyValue}>{formatPhone(clientWhatsapp)}</span>
         </div>
 
         <div className={styles.grid2}>
@@ -304,30 +336,30 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
         </div>
       </section>
 
-      {/* Seção 3: Alergias */}
+      {/* Seção 3: Histórico */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>3. Histórico de Alergias</h2>
+        <h2 className={styles.sectionTitle}>3. Histórico de Saúde</h2>
 
         <div className={styles.group}>
-          <label>Você tem histórico de alguma reação alérgica? <span className={styles.required}>*</span></label>
+          <label>Você tem histórico de... <span className={styles.required}>*</span></label>
           <div className={styles.checkboxGroup}>
             <label className={styles.checkboxLabel}>
               <input
                 type="checkbox"
-                checked={semAlergia}
+                checked={semHistorico}
                 onChange={e => {
-                  setSemAlergia(e.target.checked)
-                  if (e.target.checked) setHistoricoAlergias([])
+                  setSemHistorico(e.target.checked)
+                  if (e.target.checked) setHistorico([])
                 }}
               />
               Não
             </label>
-            {HISTORICO_ALERGIAS.map(tipo => (
+            {HISTORICO.map(tipo => (
               <label key={tipo} className={styles.checkboxLabel}>
                 <input
                   type="checkbox"
-                  checked={historicoAlergias.includes(tipo)}
-                  onChange={() => toggleHistoricoAlergia(tipo)}
+                  checked={historico.includes(tipo)}
+                  onChange={() => toggleHistorico(tipo)}
                 />
                 {tipo}
               </label>
@@ -337,7 +369,7 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
 
         <div className={styles.group}>
           <label htmlFor="descricaoAlergias">
-            Você já teve reações alérgicas na pele? Se sim, a quê?
+            Você já teve reações alérgicas com sintomas na pele? Se sim, a quê?
           </label>
           <textarea
             id="descricaoAlergias"
@@ -444,6 +476,32 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
             />
           </div>
         )}
+
+        <div className={styles.group}>
+          <label>
+            Você tem propensão a quelóide? <span className={styles.required}>*</span>
+          </label>
+          <div className={styles.radioGroup}>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="propensaoQueloide"
+                checked={propensaoQueloide === false}
+                onChange={() => setPropensaoQueloide(false)}
+              />
+              Não
+            </label>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="propensaoQueloide"
+                checked={propensaoQueloide === true}
+                onChange={() => setPropensaoQueloide(true)}
+              />
+              Sim
+            </label>
+          </div>
+        </div>
       </section>
 
       {/* Seção 5: Experiências */}
@@ -484,6 +542,34 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
         </div>
 
         <div className={styles.group} style={{ marginTop: 'var(--spacing-lg)' }}>
+          <label>
+            Sobre o pagamento do sinal: <span className={styles.required}>*</span>
+          </label>
+          <div className={styles.radioGroup} style={{ flexDirection: 'column', gap: 'var(--spacing-sm)' }}>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="compromissoPagamento"
+                value="comprovante_whatsapp"
+                checked={compromissoPagamento === 'comprovante_whatsapp'}
+                onChange={() => setCompromissoPagamento('comprovante_whatsapp')}
+              />
+              Vou enviar o comprovante pelo WhatsApp
+            </label>
+            <label className={styles.radioLabel}>
+              <input
+                type="radio"
+                name="compromissoPagamento"
+                value="negociar_whatsapp"
+                checked={compromissoPagamento === 'negociar_whatsapp'}
+                onChange={() => setCompromissoPagamento('negociar_whatsapp')}
+              />
+              No momento estou impossibilitada de realizar o pagamento do sinal — irei negociar pelo WhatsApp
+            </label>
+          </div>
+        </div>
+
+        <div className={styles.group}>
           <label className={`${styles.checkboxLabel} ${styles.termsCheckbox}`}>
             <input
               type="checkbox"
@@ -491,7 +577,7 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
               onChange={e => setAceitaTermos(e.target.checked)}
               required
             />
-            Estou ciente e comprometida(o) com as orientações acima, incluindo as normas de pagamento.
+            Li e estou ciente das orientações pré-procedimento e das condições de pagamento do sinal descritas acima.
             <span className={styles.required}> *</span>
           </label>
         </div>
@@ -504,7 +590,7 @@ export default function AnamnesisForm({ token, clientNome, clientEmail, clientWh
               onChange={e => setAceitaResponsabilidade(e.target.checked)}
               required
             />
-            Estou ciente de que sou responsável pela escolha da tatuagem e das artes, tendo aprovado o design antes de iniciar o procedimento.
+            Estou ciente de que sou a única e inteiramente responsável pela escolha e aprovação da arte e da área escolhida para tatuar, isentando a profissional de qualquer ônus ou processo decorrente dessa decisão. Concordo e me responsabilizo pela minha escolha.
             <span className={styles.required}> *</span>
           </label>
         </div>

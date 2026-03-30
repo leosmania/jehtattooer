@@ -168,6 +168,33 @@ NEXT_PUBLIC_SANITY_DATASET=production
 
 ## O que falta implementar (❌)
 
+### Fase 6 — ~~Ficha de Anamnese~~ ✅ Concluída
+
+**Arquivos a criar:**
+```
+src/app/ficha-anamnese/
+  ├── page.tsx              # Server — valida token, busca cliente
+  ├── AnamnesisForm.tsx     # 'use client' — formulário de saúde
+  └── AnamnesisForm.module.css
+
+src/app/actions/crm/
+  └── submitAnamnesis.ts    # Server Action — salva no Supabase
+```
+
+**Fluxo esperado:**
+1. Cliente acessa `/ficha-anamnese?token=<uuid>` (link recebido por email)
+2. Server verifica token no Supabase (`clients.anamnesis_token`)
+3. Se inválido → "Link inválido"
+4. Se já preenchido (`anamnesis_filled = true`) → "Ficha já preenchida, obrigada!"
+5. Se válido → renderiza formulário com campos:
+   - Condições de saúde
+   - Alergias
+   - Medicamentos em uso
+   - Condições de pele
+   - Experiências com tatuagem
+   - Gestante (sim/não)
+   - Outras informações
+6. Submit → INSERT em `anamnesis_forms` + UPDATE `clients.anamnesis_filled = true`
 
 ### Fase 7 — Calendário de Agendamentos (PRIORIDADE MÉDIA)
 

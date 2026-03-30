@@ -19,9 +19,11 @@ export interface AnamnesisData {
   em_tratamento: boolean
   medicamentos: string          // quais medicamentos
   // Extras
+  propensao_queloide: boolean
   experiencias_tatuagem: string
   outras_informacoes: string
   // Consentimento
+  compromisso_pagamento: string
   aceita_termos: boolean
 }
 
@@ -62,8 +64,10 @@ export async function submitAnamnesisAction(
         uso_alcool_drogas:   data.uso_alcool_drogas,
         em_tratamento:       data.em_tratamento,
         medicamentos:        data.medicamentos || null,
+        propensao_queloide:  data.propensao_queloide,
         experiencias_tatuagem: data.experiencias_tatuagem || null,
         outras_informacoes:  data.outras_informacoes || null,
+        compromisso_pagamento: data.compromisso_pagamento || null,
         aceita_termos:       data.aceita_termos,
       })
 

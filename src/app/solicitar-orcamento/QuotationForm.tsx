@@ -5,6 +5,15 @@ import { submitQuotationAction } from '@/app/actions/crm/submitQuotation'
 import { uploadQuotationImage } from '@/app/actions/crm/uploadImage'
 import styles from './QuotationForm.module.css'
 
+function formatPhone(value: string): string {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length === 0) return ''
+  if (digits.length <= 2) return `(${digits}`
+  if (digits.length <= 6) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  if (digits.length <= 10) return `(${digits.slice(0, 2)}) ${digits.slice(2, 6)}-${digits.slice(6)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
+
 type Step = 1 | 2 | 3 | 'success'
 
 interface FormData {
@@ -41,7 +50,8 @@ export default function QuotationForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+    const formatted = name === 'whatsapp' ? formatPhone(value) : value
+    setFormData((prev) => ({ ...prev, [name]: formatted }))
     setError('')
   }
 
@@ -102,6 +112,11 @@ export default function QuotationForm() {
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       setError('Email inválido')
+      return false
+    }
+    const phoneDigits = formData.whatsapp.replace(/\D/g, '')
+    if (phoneDigits.length < 10) {
+      setError('WhatsApp inválido — informe DDD + número')
       return false
     }
     return true
