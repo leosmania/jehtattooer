@@ -63,20 +63,32 @@ NEXT_PUBLIC_SANITY_DATASET=production
 3. Cria JWT cookie `admin-session` (HttpOnly, 7 dias)
 4. Redireciona para `/admin/clientes`
 
-### 4. Formulário Público de Orçamento
+### 4. Formulário Público de Orçamento + Simulador de Tatuagem
 | Arquivo | Função |
 |---------|--------|
-| `src/app/solicitar-orcamento/page.tsx` | Server component com metadata SEO |
-| `src/app/solicitar-orcamento/QuotationForm.tsx` | Formulário 3 passos (dados → tatuagem → investimento) |
+| `src/app/solicitar-orcamento/page.tsx` | Server component com metadata SEO + integra simulador |
+| `src/app/solicitar-orcamento/QuotationForm.tsx` | Formulário 3 passos (dados → tatuagem → investimento) com upload de imagens |
 | `src/app/solicitar-orcamento/QuotationForm.module.css` | Styling do formulário |
 | `src/app/actions/crm/submitQuotation.ts` | Server Action — cria client + quotation_request |
+| `src/app/actions/crm/uploadImage.ts` | Server Action — upload de imagens para Supabase Storage |
+| `src/app/simulador/TattooSimulator.tsx` | Simulador interativo de tatuagem (Konva.js, client-side) |
+| `src/app/simulador/TattooSimulator.module.css` | Styling do simulador |
+| `src/app/simulador/page.tsx` | Redirect para `/solicitar-orcamento` |
 
-**Fluxo:**
+**Fluxo do Formulário:**
 1. Cliente acessa `/solicitar-orcamento`
-2. Preenche 3 etapas: Dados Pessoais → Detalhes da Tatuagem → Intenção de Investimento
-3. Submit → cria registro em `clients` (com `anamnesis_token` automático) + `quotation_requests`
-4. Envia email de confirmação via Resend
-5. Card aparece no Kanban em "Novo Orçamento"
+2. Preenche 3 etapas: Dados Pessoais → Detalhes da Tatuagem (+ upload até 3 imagens de referência) → Intenção de Investimento
+3. Submit → cria registro em `clients` (com `anamnesis_token` automático) + `quotation_requests` (com `imagens_referencia`)
+4. Imagens de referência são enviadas ao Supabase Storage (bucket `quotation-images`)
+5. Envia email de confirmação via Resend
+6. Card aparece no Kanban em "Novo Orçamento"
+
+**Fluxo do Simulador (abaixo do formulário):**
+1. Cliente faz upload de foto do corpo
+2. Faz upload do desenho da tatuagem → fundo removido automaticamente via `@imgly/background-removal` (client-side, zero custo servidor)
+3. Editor interativo: arrastar, redimensionar, girar o desenho sobre a foto + slider de opacidade
+4. Salvar resultado como PNG
+5. Tudo roda 100% no browser (Canvas/Konva.js) — sem consumo de banda no Vercel
 
 ### 5. Kanban Board (Painel Admin)
 | Arquivo | Função |
@@ -99,27 +111,33 @@ NEXT_PUBLIC_SANITY_DATASET=production
 ### 6. Detalhe do Cliente + Gerar Link de Anamnese
 | Arquivo | Função |
 |---------|--------|
-| `src/app/admin/clientes/[id]/page.tsx` | Busca client + quotation + anamnesis, exibe dados |
+| `src/app/admin/clientes/[id]/page.tsx` | Busca client + quotation + anamnesis, exibe dados + imagens de referência |
 | `src/app/admin/clientes/[id]/AnamnesisLinkButton.tsx` | Botão para gerar link + enviar email + copiar URL |
-| `src/app/admin/clientes/[id]/ClientDetail.module.css` | Styling da página de detalhe |
+| `src/app/admin/clientes/[id]/ClientDetail.module.css` | Styling da página de detalhe (inclui grid de imagens) |
 | `src/app/actions/crm/generateAnamnesisLink.ts` | Server Action — marca link_sent + envia email |
 
-**Fluxo da Anamnese:**
-1. Tatuadora abre detalhe do cliente
-2. Clica "Gerar e Enviar Link de Anamnese"
-3. Sistema gera URL com token único, envia email via Resend
-4. Mostra URL copiável para compartilhar manualmente também
+**Funcionalidades:**
+- Exibe dados do cliente, detalhes do orçamento e status da anamnese
+- **Imagens de referência** do cliente aparecem como thumbnails clicáveis (abre em nova aba)
+- Botão para gerar e enviar link de anamnese via email
+- URL copiável para compartilhar manualmente
 
 ### 7. Banco de Dados (Supabase)
 | Tabela | Colunas principais |
 |--------|-------------------|
 | `clients` | id, nome, email, whatsapp, status, anamnesis_token, anamnesis_filled, anamnesis_link_sent |
-| `quotation_requests` | id, client_id, tipo_tatuagem, local_corpo, tamanho_estimado, descricao, budget_range |
+| `quotation_requests` | id, client_id, tipo_tatuagem, local_corpo, tamanho_estimado, descricao, budget_range, imagens_referencia (TEXT[]) |
 | `anamnesis_forms` | id, client_id, condicoes_saude, alergias, medicamentos, condicoes_pele, experiencias_tatuagem, gestante, outras_informacoes |
 | `appointments` | id, client_id, data_hora, duracao_min, notas |
 | `admin_users` | id, email, password_hash |
 
-**Migration:** `supabase/migrations/20260329000000_crm_tables.sql`
+**Migrations:**
+- `supabase/migrations/20260329000000_crm_tables.sql` — Schema inicial completo
+- `supabase/migrations/20260330000000_add_imagens_referencia.sql` — Coluna imagens_referencia em quotation_requests
+
+**Supabase Storage:**
+- Bucket `quotation-images` — imagens de referência enviadas pelos clientes (criado automaticamente pela server action)
+
 **Seed:** `supabase/seed.sql` (admin user)
 
 ---
@@ -202,10 +220,15 @@ src/
 │   └── email.ts                      # Resend email
 │
 ├── app/
-│   ├── solicitar-orcamento/          # ✅ Formulário público
-│   │   ├── page.tsx
-│   │   ├── QuotationForm.tsx
+│   ├── solicitar-orcamento/          # ✅ Formulário público + Simulador
+│   │   ├── page.tsx                  # Integra QuotationForm + TattooSimulator
+│   │   ├── QuotationForm.tsx         # Formulário 3 passos + upload imagens
 │   │   └── QuotationForm.module.css
+│   │
+│   ├── simulador/                    # ✅ Simulador de Tatuagem (componente)
+│   │   ├── page.tsx                  # Redirect → /solicitar-orcamento
+│   │   ├── TattooSimulator.tsx       # Editor Konva.js + bg removal
+│   │   └── TattooSimulator.module.css
 │   │
 │   ├── ficha-anamnese/               # ❌ A CRIAR
 │   │   ├── page.tsx
@@ -247,6 +270,7 @@ src/
 │   └── actions/crm/
 │       ├── loginAction.ts            # ✅
 │       ├── submitQuotation.ts        # ✅
+│       ├── uploadImage.ts            # ✅ Upload imagens → Supabase Storage
 │       ├── updateClientStatus.ts     # ✅
 │       ├── generateAnamnesisLink.ts  # ✅
 │       ├── submitAnamnesis.ts        # ❌ A CRIAR
