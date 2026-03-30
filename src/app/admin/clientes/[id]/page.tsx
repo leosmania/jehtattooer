@@ -119,6 +119,18 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
                 </div>
               )}
             </div>
+            {quotation.imagens_referencia && quotation.imagens_referencia.length > 0 && (
+              <div className={styles.referenceImages}>
+                <label>Imagens de Referência</label>
+                <div className={styles.imageGrid}>
+                  {quotation.imagens_referencia.map((url: string, i: number) => (
+                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className={styles.imageThumb}>
+                      <img src={url} alt={`Referência ${i + 1}`} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
         )}
 

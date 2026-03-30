@@ -165,8 +165,9 @@ export default function TattooSimulator() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.divider} />
       <div className={styles.header}>
-        <h1>Simulador de Tatuagem</h1>
+        <h2>Simulador de Tatuagem</h2>
         <p>Visualize como sua tatuagem ficará antes de tatuar</p>
       </div>
 
@@ -306,10 +307,7 @@ export default function TattooSimulator() {
           </div>
 
           <div className={styles.shareSection}>
-            <p>Gostou do resultado? Solicite um orçamento!</p>
-            <a href="/solicitar-orcamento" className={styles.ctaBtn}>
-              Solicitar Orçamento
-            </a>
+            <p>Gostou do resultado? Salve a imagem e compartilhe!</p>
           </div>
         </>
       )}

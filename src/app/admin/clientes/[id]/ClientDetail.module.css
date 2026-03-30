@@ -232,6 +232,49 @@
   color: var(--text-secondary);
 }
 
+/* Reference Images */
+.referenceImages {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.referenceImages label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.imageGrid {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.imageThumb {
+  width: 120px;
+  height: 120px;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.imageThumb:hover {
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.imageThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .container {

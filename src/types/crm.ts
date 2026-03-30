@@ -31,6 +31,7 @@ export interface QuotationRequest {
   tamanho_estimado: string
   descricao: string | null
   budget_range: string
+  imagens_referencia: string[]
   created_at: string
 }
 

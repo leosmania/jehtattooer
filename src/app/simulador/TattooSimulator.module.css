@@ -9,7 +9,14 @@
   margin-bottom: var(--spacing-xl);
 }
 
-.header h1 {
+.divider {
+  border-top: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+}
+
+.header h1,
+.header h2 {
   font-size: 2rem;
   color: var(--text-primary);
   margin: 0 0 var(--spacing-sm);
