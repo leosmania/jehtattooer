@@ -116,6 +116,14 @@
 
 .group select {
   cursor: pointer;
+  color-scheme: light;
+  appearance: auto;
+}
+
+.group select option {
+  color: var(--text-primary);
+  background-color: white;
+  padding: 2px 4px;
 }
 
 /* Buttons */

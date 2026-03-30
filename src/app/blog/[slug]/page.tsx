@@ -34,6 +34,7 @@ interface BlogPost {
 
 async function getBlogPost(slug: string): Promise<BlogPost | null> {
   try {
+    console.log('🔍 Buscando post com slug:', slug);
     const post = await client.fetch<BlogPost>(
       `*[_type == "blog" && slug.current == $slug && published == true][0]{
         _id,
@@ -51,6 +52,13 @@ async function getBlogPost(slug: string): Promise<BlogPost | null> {
       }`,
       { slug }
     );
+    if (!post) {
+      console.warn('⚠️ Post não encontrado. Buscando todos os posts para debug:');
+      const allPosts = await client.fetch(
+        `*[_type == "blog" && published == true]{_id, title, slug, published}`
+      );
+      console.log('Posts disponíveis:', allPosts);
+    }
     return post || null;
   } catch (error) {
     console.error('Erro ao buscar post:', error);

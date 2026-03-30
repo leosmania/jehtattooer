@@ -279,7 +279,7 @@ export default function QuotationForm() {
         {step === 3 && (
           <div className={styles.stepContent}>
             <div className={styles.group}>
-              <label htmlFor="budget_range">Faixa de Orçamento *</label>
+              <label htmlFor="budget_range">Intenção de Investimento *</label>
               <select
                 id="budget_range"
                 name="budget_range"
