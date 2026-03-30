@@ -116,13 +116,15 @@
 
 .group select {
   cursor: pointer;
+  color: var(--text-primary) !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
   color-scheme: light;
   appearance: auto;
 }
 
 .group select option {
-  color: var(--text-primary);
-  background-color: white;
+  color: var(--text-primary) !important;
+  background-color: white !important;
   padding: 2px 4px;
 }
 
