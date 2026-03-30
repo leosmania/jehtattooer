@@ -93,7 +93,9 @@
 .main {
   padding: var(--spacing-xl);
   overflow-y: auto;
-  max-height: 100vh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Mobile responsivo */
