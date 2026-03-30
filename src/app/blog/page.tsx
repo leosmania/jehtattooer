@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { client } from '@/sanity/client';
 import BlogClient from './BlogClient';
 import styles from './Blog.module.css';
@@ -60,7 +61,9 @@ export default async function Blog() {
 
       <section className={styles.blogSection}>
         <div className="container">
-          <BlogClient allPosts={posts} categories={categories} />
+          <Suspense fallback={<div>Carregando...</div>}>
+            <BlogClient allPosts={posts} categories={categories} />
+          </Suspense>
         </div>
       </section>
     </>
