@@ -2,7 +2,7 @@
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import styles from './Kanban.module.css'
 
 interface Client {
@@ -19,6 +19,7 @@ interface KanbanCardProps {
 }
 
 export default function KanbanCard({ client }: KanbanCardProps) {
+  const router = useRouter()
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: client.id,
   })
@@ -34,27 +35,32 @@ export default function KanbanCard({ client }: KanbanCardProps) {
     month: 'short',
   })
 
+  const handleClick = () => {
+    if (!isDragging) {
+      router.push(`/admin/clientes/${client.id}`)
+    }
+  }
+
   return (
-    <Link href={`/admin/clientes/${client.id}`}>
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className={styles.card}
-      >
-        <div className={styles.cardHeader}>
-          <h4>{client.nome}</h4>
-          <span className={styles.date}>{date}</span>
-        </div>
-
-        <p className={styles.email}>{client.email}</p>
-        <p className={styles.whatsapp}>{client.whatsapp}</p>
-
-        <div className={styles.cardFooter}>
-          <span className={styles.dragHint}>⋮⋮ Arraste para mover</span>
-        </div>
+    <div
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className={styles.card}
+      onClick={handleClick}
+    >
+      <div className={styles.cardHeader}>
+        <h4>{client.nome}</h4>
+        <span className={styles.date}>{date}</span>
       </div>
-    </Link>
+
+      <p className={styles.email}>{client.email}</p>
+      <p className={styles.whatsapp}>{client.whatsapp}</p>
+
+      <div className={styles.cardFooter}>
+        <span className={styles.dragHint}>⋮⋮ Arraste para mover</span>
+      </div>
+    </div>
   )
 }
