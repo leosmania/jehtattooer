@@ -169,6 +169,69 @@
   color: #FF6B6B;
 }
 
+.errorText {
+  color: #FF6B6B;
+  margin: 0 0 var(--spacing-md);
+  font-size: 0.9rem;
+}
+
+/* Link de Anamnese - Resultado */
+.linkResult {
+  padding: var(--spacing-lg);
+  background-color: rgba(150, 206, 180, 0.1);
+  border: 1px solid #96CEB4;
+  border-radius: 8px;
+}
+
+.linkResult h3 {
+  margin: 0 0 var(--spacing-md);
+  color: #96CEB4;
+  font-family: var(--font-heading);
+}
+
+.linkResult p {
+  margin: 0 0 var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.linkBox {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-md) 0;
+}
+
+.linkInput {
+  flex: 1;
+  padding: var(--spacing-md);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-family: monospace;
+}
+
+.copyBtn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: #96CEB4;
+  color: #081C15;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.copyBtn:hover {
+  background-color: #7db99e;
+}
+
+.linkHint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .container {

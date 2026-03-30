@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import AnamnesisLinkButton from './AnamnesisLinkButton'
 import styles from './ClientDetail.module.css'
 
 interface ClientDetailPageProps {
@@ -141,9 +142,11 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
       </div>
 
       <div className={styles.actions}>
-        <button className={styles.primaryBtn}>
-          📧 Gerar e Enviar Link de Anamnese
-        </button>
+        <AnamnesisLinkButton
+          clientId={clientData.id}
+          alreadySent={clientData.anamnesis_link_sent || false}
+          alreadyFilled={clientData.anamnesis_filled || false}
+        />
       </div>
     </div>
   )
