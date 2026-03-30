@@ -107,7 +107,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-const portableTextComponents: PortableTextReactComponents = {
+const portableTextComponents: Partial<PortableTextReactComponents> = {
   types: {
     image: ({ value }: any) => {
       return (
@@ -196,7 +196,7 @@ export default async function BlogPost({ params }: { params: { slug: string } })
           <div className="container">
             <div className={styles.main}>
               <div className={styles.body}>
-                <PortableText value={post.content} components={portableTextComponents} />
+                <PortableText value={post.content} components={portableTextComponents as any} />
               </div>
 
               {/* Tags */}
