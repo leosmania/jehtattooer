@@ -27,6 +27,8 @@
   gap: var(--spacing-md);
   padding: var(--spacing-md);
   min-height: 600px;
+  min-width: 280px;
+  flex: 1 0 280px;
 }
 
 .columnHeader {
