@@ -1,18 +1,38 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { loginAction } from '@/app/actions/crm/loginAction'
 import styles from './LoginForm.module.css'
 
+function SubmitButton() {
+  const { pending } = useFormStatus()
+  return (
+    <button type="submit" className={styles.button} disabled={pending}>
+      {pending ? 'Entrando...' : 'Entrar'}
+    </button>
+  )
+}
+
 export default function LoginForm() {
-  const [state, formAction, isPending] = useActionState(loginAction, { error: '' })
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleSubmit(formData: FormData) {
+    setError(null)
+    const result = await loginAction(formData)
+
+    if (result.error) {
+      setError(result.error)
+    }
+    // Se sucesso, loginAction redireciona automaticamente
+  }
 
   return (
-    <form action={formAction} className={styles.form}>
+    <form action={handleSubmit} className={styles.form}>
       <h1 className={styles.title}>Painel do Admin</h1>
       <p className={styles.subtitle}>Entre com suas credenciais</p>
 
-      {state.error && <div className={styles.error}>{state.error}</div>}
+      {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.group}>
         <label htmlFor="email" className={styles.label}>
@@ -25,7 +45,6 @@ export default function LoginForm() {
           placeholder="jessica@jehtattooer.com.br"
           className={styles.input}
           required
-          disabled={isPending}
           defaultValue="jessica@jehtattooer.com.br"
         />
       </div>
@@ -41,13 +60,10 @@ export default function LoginForm() {
           placeholder="Sua senha"
           className={styles.input}
           required
-          disabled={isPending}
         />
       </div>
 
-      <button type="submit" className={styles.button} disabled={isPending}>
-        {isPending ? 'Entrando...' : 'Entrar'}
-      </button>
+      <SubmitButton />
 
       <p className={styles.footer}>
         Painel exclusivo para administradores

@@ -80,6 +80,7 @@ export default function QuotationForm() {
     if (!validateStep3()) return
 
     setIsLoading(true)
+    setError('')
     try {
       const result = await submitQuotationAction(formData)
 
@@ -90,6 +91,7 @@ export default function QuotationForm() {
       }
 
       setStep('success')
+      setIsLoading(false)
     } catch (err) {
       setError('Erro ao enviar pedido. Tente novamente.')
       setIsLoading(false)
