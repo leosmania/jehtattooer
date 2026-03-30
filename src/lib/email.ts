@@ -65,7 +65,7 @@ export async function sendAnamnesisEmail({
       return { success: false, error: String(result.error) }
     }
 
-    console.log('✅ Email enviado com sucesso:', result.id)
+    console.log('✅ Email enviado com sucesso:', result.data?.id || 'enviado')
     return { success: true }
   } catch (error) {
     console.error('❌ Erro ao enviar email:', error)
