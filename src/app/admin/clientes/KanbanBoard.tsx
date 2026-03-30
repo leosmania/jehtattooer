@@ -40,7 +40,9 @@ export default function KanbanBoard({ clients }: KanbanBoardProps) {
   const [items, setItems] = useState<Client[]>(clients)
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      distance: 8,
+      activationConstraint: {
+        distance: 8,
+      },
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
