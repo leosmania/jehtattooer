@@ -22,7 +22,7 @@ export interface SessionPayload {
  * Encrypt: cria um JWT assinado
  */
 export async function encrypt(payload: SessionPayload): Promise<string> {
-  return new SignJWT(payload)
+  return new SignJWT(payload as any)
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
