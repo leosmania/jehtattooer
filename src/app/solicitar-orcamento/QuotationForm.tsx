@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { submitQuotationAction } from '@/app/actions/crm/submitQuotation'
+import { uploadQuotationImage } from '@/app/actions/crm/uploadImage'
 import styles from './QuotationForm.module.css'
 
 type Step = 1 | 2 | 3 | 'success'
@@ -15,12 +16,17 @@ interface FormData {
   tamanho_estimado: string
   descricao: string
   budget_range: string
+  imagens_referencia: string[]
 }
 
 export default function QuotationForm() {
   const [step, setStep] = useState<Step>(1)
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const [imageUploading, setImageUploading] = useState(false)
+  const [imagePreviews, setImagePreviews] = useState<string[]>([])
+  const fileInputRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState<FormData>({
     nome: '',
     email: '',
@@ -30,12 +36,63 @@ export default function QuotationForm() {
     tamanho_estimado: '',
     descricao: '',
     budget_range: '',
+    imagens_referencia: [],
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
     setError('')
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files || files.length === 0) return
+
+    if (formData.imagens_referencia.length + files.length > 3) {
+      setError('Máximo de 3 imagens de referência')
+      return
+    }
+
+    setImageUploading(true)
+    setError('')
+
+    for (const file of Array.from(files)) {
+      if (file.size > 5 * 1024 * 1024) {
+        setError('Imagem muito grande (máximo 5MB)')
+        setImageUploading(false)
+        return
+      }
+
+      // Local preview
+      const previewUrl = URL.createObjectURL(file)
+
+      // Upload to Supabase
+      const fd = new FormData()
+      fd.append('file', file)
+      const result = await uploadQuotationImage(fd)
+
+      if (result.success && result.url) {
+        setFormData((prev) => ({
+          ...prev,
+          imagens_referencia: [...prev.imagens_referencia, result.url!],
+        }))
+        setImagePreviews((prev) => [...prev, previewUrl])
+      } else {
+        setError(result.error || 'Erro ao enviar imagem')
+      }
+    }
+
+    setImageUploading(false)
+    if (fileInputRef.current) fileInputRef.current.value = ''
+  }
+
+  const handleRemoveImage = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      imagens_referencia: prev.imagens_referencia.filter((_, i) => i !== index),
+    }))
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index))
   }
 
   const validateStep1 = () => {
@@ -119,7 +176,9 @@ export default function QuotationForm() {
               tamanho_estimado: '',
               descricao: '',
               budget_range: '',
+              imagens_referencia: [],
             })
+            setImagePreviews([])
           }}
           className={styles.resetBtn}
         >
@@ -264,6 +323,37 @@ export default function QuotationForm() {
               />
             </div>
 
+            <div className={styles.group}>
+              <label>Imagens de Referência (opcional, máx. 3)</label>
+              <div className={styles.imageUploadArea}>
+                {imagePreviews.map((src, i) => (
+                  <div key={i} className={styles.imagePreview}>
+                    <img src={src} alt={`Referência ${i + 1}`} />
+                    <button
+                      type="button"
+                      className={styles.removeImageBtn}
+                      onClick={() => handleRemoveImage(i)}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                {formData.imagens_referencia.length < 3 && (
+                  <label className={styles.addImageBtn}>
+                    {imageUploading ? '...' : '+'}
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={imageUploading}
+                      hidden
+                    />
+                  </label>
+                )}
+              </div>
+            </div>
+
             <div className={styles.buttonGroup}>
               <button type="button" onClick={() => setStep(1)} className={styles.backBtn}>
                 ← Voltar
@@ -305,6 +395,9 @@ export default function QuotationForm() {
               <p><strong>Local:</strong> {formData.local_corpo}</p>
               <p><strong>Tamanho:</strong> {formData.tamanho_estimado}</p>
               <p><strong>Orçamento:</strong> {formData.budget_range}</p>
+              {formData.imagens_referencia.length > 0 && (
+                <p><strong>Imagens:</strong> {formData.imagens_referencia.length} referência(s) enviada(s)</p>
+              )}
             </div>
 
             <div className={styles.buttonGroup}>

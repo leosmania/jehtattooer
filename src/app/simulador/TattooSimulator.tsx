@@ -5,7 +5,7 @@ import { Stage, Layer, Image as KonvaImage, Transformer } from 'react-konva'
 import Konva from 'konva'
 import styles from './TattooSimulator.module.css'
 
-type SimulatorStep = 'upload-body' | 'upload-tattoo' | 'editor'
+type SimulatorStep = 'upload-body' | 'upload-tattoo' | 'processing' | 'editor'
 
 export default function TattooSimulator() {
   const [step, setStep] = useState<SimulatorStep>('upload-body')
@@ -14,6 +14,7 @@ export default function TattooSimulator() {
   const [stageSize, setStageSize] = useState({ width: 600, height: 600 })
   const [tattooOpacity, setTattooOpacity] = useState(0.85)
   const [isSelected, setIsSelected] = useState(true)
+  const [processingProgress, setProcessingProgress] = useState('')
 
   const containerRef = useRef<HTMLDivElement>(null)
   const stageRef = useRef<Konva.Stage>(null)
@@ -41,35 +42,69 @@ export default function TattooSimulator() {
     }
   }, [isSelected, tattooImage])
 
-  const loadImage = useCallback((file: File): Promise<HTMLImageElement> => {
+  const loadImage = useCallback((src: string): Promise<HTMLImageElement> => {
+    return new Promise((resolve, reject) => {
+      const img = new window.Image()
+      img.onload = () => resolve(img)
+      img.onerror = reject
+      img.src = src
+    })
+  }, [])
+
+  const loadFileAsDataURL = useCallback((file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
-      reader.onload = (e) => {
-        const img = new window.Image()
-        img.onload = () => resolve(img)
-        img.onerror = reject
-        img.src = e.target?.result as string
-      }
+      reader.onload = (e) => resolve(e.target?.result as string)
       reader.onerror = reject
       reader.readAsDataURL(file)
     })
   }, [])
 
+  const removeBackground = useCallback(async (file: File): Promise<HTMLImageElement> => {
+    setProcessingProgress('Carregando modelo de IA (primeira vez pode demorar)...')
+    const { removeBackground: removeBg } = await import('@imgly/background-removal')
+
+    setProcessingProgress('Removendo fundo da imagem...')
+    const blob = await removeBg(file, {
+      progress: (key: string, current: number, total: number) => {
+        if (key === 'compute:inference') {
+          const pct = Math.round((current / total) * 100)
+          setProcessingProgress(`Removendo fundo... ${pct}%`)
+        }
+      },
+    })
+
+    const url = URL.createObjectURL(blob)
+    const img = await loadImage(url)
+    return img
+  }, [loadImage])
+
   const handleBodyUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    const img = await loadImage(file)
+    const dataUrl = await loadFileAsDataURL(file)
+    const img = await loadImage(dataUrl)
     setBodyImage(img)
     setStep('upload-tattoo')
-  }, [loadImage])
+  }, [loadFileAsDataURL, loadImage])
 
   const handleTattooUpload = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
-    const img = await loadImage(file)
-    setTattooImage(img)
-    setStep('editor')
-  }, [loadImage])
+
+    setStep('processing')
+    try {
+      const img = await removeBackground(file)
+      setTattooImage(img)
+      setStep('editor')
+    } catch {
+      // Fallback: use original image if bg removal fails
+      const dataUrl = await loadFileAsDataURL(file)
+      const img = await loadImage(dataUrl)
+      setTattooImage(img)
+      setStep('editor')
+    }
+  }, [removeBackground, loadFileAsDataURL, loadImage])
 
   const getBodyImageProps = useCallback(() => {
     if (!bodyImage) return { x: 0, y: 0, width: stageSize.width, height: stageSize.height }
@@ -98,7 +133,6 @@ export default function TattooSimulator() {
 
   const handleExport = useCallback(() => {
     if (!stageRef.current) return
-    // Deselect before export to hide transformer handles
     setIsSelected(false)
     setTimeout(() => {
       const uri = stageRef.current!.toDataURL({ pixelRatio: 2 })
@@ -116,6 +150,7 @@ export default function TattooSimulator() {
     setStep('upload-body')
     setTattooOpacity(0.85)
     setIsSelected(true)
+    setProcessingProgress('')
   }, [])
 
   const handleStageClick = useCallback((e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
@@ -140,7 +175,7 @@ export default function TattooSimulator() {
         <div className={`${styles.step} ${step === 'upload-body' ? styles.active : ''} ${step !== 'upload-body' ? styles.done : ''}`}>
           1. Foto do corpo
         </div>
-        <div className={`${styles.step} ${step === 'upload-tattoo' ? styles.active : ''} ${step === 'editor' ? styles.done : ''}`}>
+        <div className={`${styles.step} ${step === 'upload-tattoo' || step === 'processing' ? styles.active : ''} ${step === 'editor' ? styles.done : ''}`}>
           2. Desenho da tattoo
         </div>
         <div className={`${styles.step} ${step === 'editor' ? styles.active : ''}`}>
@@ -171,7 +206,7 @@ export default function TattooSimulator() {
         <div className={styles.uploadArea}>
           <div className={styles.uploadIcon}>🎨</div>
           <h2>Escolha o desenho da tatuagem</h2>
-          <p>Envie o desenho que deseja testar no corpo. Fundos transparentes (PNG) funcionam melhor!</p>
+          <p>Envie o desenho que deseja testar. O fundo será removido automaticamente!</p>
           <label className={styles.uploadBtn}>
             Escolher desenho
             <input
@@ -184,6 +219,15 @@ export default function TattooSimulator() {
           <button className={styles.backBtn} onClick={() => setStep('upload-body')}>
             Voltar
           </button>
+        </div>
+      )}
+
+      {/* Processing / removing background */}
+      {step === 'processing' && (
+        <div className={styles.uploadArea}>
+          <div className={styles.spinner} />
+          <h2>Processando imagem...</h2>
+          <p className={styles.processingText}>{processingProgress}</p>
         </div>
       )}
 

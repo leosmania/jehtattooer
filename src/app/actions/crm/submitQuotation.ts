@@ -17,6 +17,7 @@ interface QuotationFormData {
   tamanho_estimado: string
   descricao: string
   budget_range: string
+  imagens_referencia?: string[]
 }
 
 export async function submitQuotationAction(data: QuotationFormData): Promise<{
@@ -57,6 +58,7 @@ export async function submitQuotationAction(data: QuotationFormData): Promise<{
         tamanho_estimado: data.tamanho_estimado,
         descricao: data.descricao || null,
         budget_range: data.budget_range,
+        imagens_referencia: data.imagens_referencia || [],
       })
 
     if (quotationError) {
