@@ -3,45 +3,57 @@ import Link from 'next/link'
 import styles from './ClientDetail.module.css'
 
 interface ClientDetailPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default async function ClientDetailPage({ params }: ClientDetailPageProps) {
-  const { id } = params
+  const { id } = await params
+
+  console.log('🔍 Buscando cliente com ID:', id)
 
   // Buscar cliente
   const { data: client, error: clientError } = await supabase
     .from('clients')
     .select('*')
     .eq('id', id)
-    .single()
 
-  // Buscar quotation
-  const { data: quotation } = await supabase
-    .from('quotation_requests')
-    .select('*')
-    .eq('client_id', id)
-    .single()
+  console.log('Cliente encontrado:', client)
+  console.log('Erro:', clientError)
 
-  // Buscar anamnesis
-  const { data: anamnesis } = await supabase
-    .from('anamnesis_forms')
-    .select('*')
-    .eq('client_id', id)
-    .single()
-
-  if (clientError || !client) {
+  if (clientError || !client || client.length === 0) {
+    console.error('❌ Cliente não encontrado:', clientError)
     return (
       <div className={styles.container}>
         <Link href="/admin/clientes" className={styles.backLink}>
           ← Voltar
         </Link>
-        <div className={styles.error}>Cliente não encontrado</div>
+        <div className={styles.error}>
+          <p>Cliente não encontrado</p>
+          <p className={styles.errorDetails}>ID: {id}</p>
+        </div>
       </div>
     )
   }
+
+  const clientData = client[0]
+
+  // Buscar quotation
+  const { data: quotations } = await supabase
+    .from('quotation_requests')
+    .select('*')
+    .eq('client_id', id)
+
+  const quotation = quotations?.[0]
+
+  // Buscar anamnesis
+  const { data: anamnesises } = await supabase
+    .from('anamnesis_forms')
+    .select('*')
+    .eq('client_id', id)
+
+  const anamnesis = anamnesises?.[0]
 
   return (
     <div className={styles.container}>
@@ -50,8 +62,8 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
       </Link>
 
       <div className={styles.header}>
-        <h1>{client.nome}</h1>
-        <span className={styles.status}>{client.status.replace(/_/g, ' ').toUpperCase()}</span>
+        <h1>{clientData.nome}</h1>
+        <span className={styles.status}>{clientData.status.replace(/_/g, ' ').toUpperCase()}</span>
       </div>
 
       <div className={styles.grid}>
@@ -61,19 +73,19 @@ export default async function ClientDetailPage({ params }: ClientDetailPageProps
           <div className={styles.infoGrid}>
             <div className={styles.infoItem}>
               <label>Email</label>
-              <p>{client.email}</p>
+              <p>{clientData.email}</p>
             </div>
             <div className={styles.infoItem}>
               <label>WhatsApp</label>
-              <p>{client.whatsapp}</p>
+              <p>{clientData.whatsapp}</p>
             </div>
             <div className={styles.infoItem}>
               <label>Status</label>
-              <p>{client.status}</p>
+              <p>{clientData.status}</p>
             </div>
             <div className={styles.infoItem}>
               <label>Criado em</label>
-              <p>{new Date(client.created_at).toLocaleDateString('pt-BR')}</p>
+              <p>{new Date(clientData.created_at).toLocaleDateString('pt-BR')}</p>
             </div>
           </div>
         </section>
