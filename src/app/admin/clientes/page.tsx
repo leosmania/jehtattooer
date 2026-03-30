@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import { supabase } from '@/lib/supabase'
 import KanbanBoard from './KanbanBoard'
+import styles from './ClientesPage.module.css'
 
 export const metadata: Metadata = {
   title: 'Clientes | Admin',
@@ -27,9 +28,11 @@ export default async function ClientesPage() {
   }
 
   return (
-    <div>
-      <h1>Meus Clientes</h1>
-      <p className="subtitle">Gerencie seus orçamentos e agendamentos</p>
+    <div className={styles.page}>
+      <div className={styles.header}>
+        <h1>Meus Clientes</h1>
+        <p>Gerencie seus orçamentos e agendamentos</p>
+      </div>
       <KanbanBoard clients={clients as Client[]} />
     </div>
   )
