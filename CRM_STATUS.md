@@ -142,37 +142,36 @@ NEXT_PUBLIC_SANITY_DATASET=production
 
 ---
 
+### 8. Ficha de Anamnese Pública
+
+| Arquivo | Função |
+|---------|--------|
+| `src/app/ficha-anamnese/page.tsx` | Server — valida token, trata estados inválido/já preenchido |
+| `src/app/ficha-anamnese/AnamnesisForm.tsx` | Formulário 6 seções: dados pessoais, saúde, pele, alergias, medicamentos, termos |
+| `src/app/ficha-anamnese/AnamnesisForm.module.css` | Styling |
+| `src/app/actions/crm/submitAnamnesis.ts` | Server Action — salva ficha + marca anamnesis_filled = true |
+| `supabase/migrations/20260330000001_expand_anamnesis_form.sql` | Adiciona colunas à tabela anamnesis_forms |
+
+**Campos coletados (LGPD — mínimo necessário para saúde):**
+- Data de nascimento, profissão
+- Doenças (diabetes, epilepsia, hemofilia, quelóide, etc.)
+- Condições de pele (vitiligo, eczema, psoríase, melanoma, etc.)
+- Pressão arterial
+- Histórico de alergias
+- Gestante/lactante, uso de álcool/drogas, medicamentos em uso
+- Experiências anteriores com tatuagem
+- Aceite dos termos de responsabilidade
+
+> **Nota LGPD:** CPF, RG e endereço foram **intencionalmente omitidos** da anamnese — não têm finalidade de saúde. Serão coletados na Fase 8 (Contrato de Serviço), com base legal de execução de contrato (art. 7°, V).
+
+---
+
 ## O que falta implementar (❌)
 
-### Fase 6 — Ficha de Anamnese Pública (PRIORIDADE ALTA)
-
-**Arquivos a criar:**
-```
-src/app/ficha-anamnese/
-  ├── page.tsx              # Server — valida token, busca cliente
-  ├── AnamnesisForm.tsx     # 'use client' — formulário de saúde
-  └── AnamnesisForm.module.css
-
-src/app/actions/crm/
-  └── submitAnamnesis.ts    # Server Action — salva no Supabase
-```
-
-**Fluxo esperado:**
-1. Cliente acessa `/ficha-anamnese?token=<uuid>` (link recebido por email)
-2. Server verifica token no Supabase (`clients.anamnesis_token`)
-3. Se inválido → "Link inválido"
-4. Se já preenchido (`anamnesis_filled = true`) → "Ficha já preenchida, obrigada!"
-5. Se válido → renderiza formulário com campos:
-   - Condições de saúde
-   - Alergias
-   - Medicamentos em uso
-   - Condições de pele
-   - Experiências com tatuagem
-   - Gestante (sim/não)
-   - Outras informações
-6. Submit → INSERT em `anamnesis_forms` + UPDATE `clients.anamnesis_filled = true`
 
 ### Fase 7 — Calendário de Agendamentos (PRIORIDADE MÉDIA)
+
+
 
 **Arquivos a criar:**
 ```
@@ -195,6 +194,47 @@ src/app/actions/crm/
 - Modal para criar/editar agendamentos (data/hora, duração, notas, cliente)
 - Vincular agendamento a um cliente existente
 - Sidebar já tem link "📅 Calendário" pronto
+
+### Fase 8 — Contrato de Prestação de Serviço Digital (PRIORIDADE BAIXA)
+
+**Motivação (LGPD):** CPF, RG e endereço têm base legal na execução de contrato (art. 7°, V), mas não pertencem à ficha de anamnese (finalidade de saúde). Devem ser coletados num documento separado, no momento correto: dia da sessão.
+
+**Arquivos a criar:**
+```
+src/app/contrato/
+  ├── page.tsx              # Server — valida token de contrato, busca cliente
+  ├── ContratoForm.tsx      # 'use client' — formulário de contrato
+  └── ContratoForm.module.css
+
+src/app/actions/crm/
+  └── submitContrato.ts     # Server Action — salva no Supabase
+```
+
+**Nova tabela Supabase:**
+```sql
+CREATE TABLE service_contracts (
+  id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  client_id     UUID NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+  cpf           TEXT NOT NULL,
+  rg            TEXT NOT NULL,
+  endereco      TEXT NOT NULL,
+  descricao_servico TEXT,  -- estilo, local, tamanho
+  valor_total   NUMERIC,
+  valor_sinal   NUMERIC,
+  aceita_termos BOOLEAN DEFAULT FALSE,
+  contract_token UUID UNIQUE DEFAULT gen_random_uuid(),
+  signed_at     TIMESTAMPTZ,
+  created_at    TIMESTAMPTZ DEFAULT now()
+);
+```
+
+**Fluxo esperado:**
+1. Tatuadora move cliente para "Agendado" no Kanban
+2. Abre detalhe → clica "Enviar Contrato"
+3. Cliente recebe email com link `/contrato?token=<uuid>`
+4. Preenche CPF, RG, endereço + confirma detalhes do serviço
+5. Aceita termos → data/hora do aceite registrada no banco
+6. Tatuadora vê contrato assinado no detalhe do cliente
 
 ### Melhorias Pendentes (PRIORIDADE BAIXA)
 
