@@ -1,0 +1,169 @@
+.kanbanContainer {
+  display: grid;
+  grid-auto-columns: minmax(320px, 1fr);
+  grid-auto-flow: column;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  overflow-x: auto;
+  background-color: rgba(92, 114, 110, 0.05);
+  border-radius: 8px;
+  min-height: 700px;
+}
+
+/* Column */
+.column {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  min-height: 600px;
+}
+
+.columnHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.columnHeader h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+}
+
+.count {
+  display: inline-block;
+  background-color: var(--accent);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Card List */
+.cardList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  flex: 1;
+  overflow-y: auto;
+}
+
+.emptyState {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  padding: var(--spacing-xl) var(--spacing-md);
+  border: 1px dashed var(--border-color);
+  border-radius: 4px;
+  background-color: rgba(92, 114, 110, 0.05);
+}
+
+/* Card */
+.card {
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: var(--spacing-md);
+  cursor: grab;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-left-color: #5C726E;
+}
+
+.card:active {
+  cursor: grabbing;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.cardHeader h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  flex: 1;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.email {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-sm);
+  word-break: break-all;
+}
+
+.whatsapp {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 var(--spacing-md);
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.dragHint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .kanbanContainer {
+    grid-auto-columns: minmax(280px, 1fr);
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    min-height: 500px;
+  }
+
+  .column {
+    min-height: 400px;
+  }
+
+  .columnHeader h3 {
+    font-size: 1rem;
+  }
+
+  .card {
+    padding: var(--spacing-md) var(--spacing-sm);
+  }
+
+  .cardHeader h4 {
+    font-size: 0.95rem;
+  }
+}

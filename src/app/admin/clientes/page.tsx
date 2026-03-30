@@ -1,14 +1,36 @@
 import { Metadata } from 'next'
+import { supabase } from '@/lib/supabase'
+import KanbanBoard from './KanbanBoard'
 
 export const metadata: Metadata = {
   title: 'Clientes | Admin',
 }
 
-export default function ClientesPage() {
+interface Client {
+  id: string
+  nome: string
+  email: string
+  whatsapp: string
+  status: string
+  created_at: string
+}
+
+export default async function ClientesPage() {
+  const { data: clients, error } = await supabase
+    .from('clients')
+    .select('id, nome, email, whatsapp, status, created_at')
+    .order('created_at', { ascending: false })
+
+  if (error) {
+    console.error('Erro ao buscar clientes:', error)
+    return <div>Erro ao carregar clientes</div>
+  }
+
   return (
     <div>
-      <h1>Clientes - Em Construção</h1>
-      <p>Kanban board em desenvolvimento...</p>
+      <h1>Meus Clientes</h1>
+      <p className="subtitle">Gerencie seus orçamentos e agendamentos</p>
+      <KanbanBoard clients={clients as Client[]} />
     </div>
   )
 }
