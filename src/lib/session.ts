@@ -38,7 +38,7 @@ export async function decrypt(token?: string): Promise<SessionPayload | null> {
 
   try {
     const verified = await jwtVerify(token, secret)
-    return verified.payload as SessionPayload
+    return verified.payload as unknown as SessionPayload
   } catch (error) {
     // Token inválido, expirado, ou erro na verificação
     return null
