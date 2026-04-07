@@ -51,6 +51,10 @@
 
 @media (max-width: 768px) {
   .nav {
-    display: none; /* simple mobile hide for now */
+    gap: 0;
+  }
+
+  .nav a:not(.promoBtn) {
+    display: none;
   }
 }

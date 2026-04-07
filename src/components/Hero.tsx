@@ -32,7 +32,7 @@ export default async function Hero() {
         <h1 className={styles.title}>Tatuagens Florais e Fineline Delicadas <br />em Florianópolis</h1>
         <p className={styles.subtitle}>Especialista em traduzir histórias em arte delicada. Atendimento exclusivo e trabalhos minimalistas desenhados sob medida para você.</p>
         <div className={styles.actions}>
-          <a href="#portfolio" className="btn-primary">Ver Meus Trabalhos</a>
+          <a href="#portfolio" className="btn-primary">Portfólio</a>
           <a href="#contato" className="btn-outline">Solicitar Orçamento</a>
         </div>
       </div>
