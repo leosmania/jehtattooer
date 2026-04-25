@@ -6,6 +6,16 @@ import { MessageCircle, CheckCircle } from 'lucide-react';
 import { submitLead } from '../actions/saveLead';
 import styles from './Roleta.module.css';
 
+function getPrizeMessage(prize: string): string {
+  if (prize.includes('Mini Tattoo')) {
+    return 'Parabéns! Você ganhou uma Mini Tattoo ao gastar R$300 comigo.';
+  }
+  if (prize.includes('10%')) {
+    return 'Parabéns! Você ganhou 10% de desconto ao realizar uma tattoo acima de R$500.';
+  }
+  return `Parabéns! Você ganhou ${prize} ao realizar uma tattoo de qualquer valor comigo.`;
+}
+
 const PRIZES = [
   "EcoBag Personalizada",
   "10% DESC. Acima de R$500",
@@ -130,11 +140,7 @@ export default function RoletaClient() {
             <div className={styles.successIcon}>
               <CheckCircle size={48} color="#22c55e" />
             </div>
-            <h3>Parabéns!</h3>
-            <p>Você ganhou:</p>
-            <div className={styles.prizeHighlight}>
-              {prizeWon}
-            </div>
+            <h3>{getPrizeMessage(prizeWon)}</h3>
             <p className={styles.successDesc}>Tire um print ou clique abaixo para validar seu prêmio no WhatsApp.</p>
             <a 
               href={`https://wa.me/5548998158191?text=${whatsappMessage}`}
